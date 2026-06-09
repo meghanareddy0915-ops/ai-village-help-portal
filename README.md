@@ -20,6 +20,14 @@ AI Village Help Portal is a smart public service portal for village people.
 - Pandas
 - GitLab
 
+## Advantages
+
+- Easy for villagers to understand
+- Gives official government websites
+- Helps farmers and students
+- Supports complaint reporting
+- Provides emergency support
+
 ## How to Run
 
 ```bash
