@@ -73,3 +73,10 @@ streamlit run app.py
 - Scholarship Information
 - Job Notifications
 - Emergency Support
+
+## Project Goals
+
+- Improve access to public services
+- Support rural communities
+- Provide reliable information
+- Simplify government interactions
