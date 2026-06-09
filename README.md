@@ -64,3 +64,12 @@ streamlit run app.py
 - Easy navigation for rural users
 - Centralized information portal
 - AI-powered assistance
+
+## Key Services
+
+- Farmer Assistance
+- Health Guidance
+- Complaint Registration
+- Scholarship Information
+- Job Notifications
+- Emergency Support
