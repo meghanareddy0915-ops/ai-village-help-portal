@@ -32,3 +32,14 @@ AI Village Help Portal is a smart public service portal for village people.
 
 ```bash
 pip install -r requirements.txt
+streamlit run app.py
+```
+
+## Future Improvements
+
+- Voice-based AI assistant
+- Regional language support
+- SMS notifications
+- Online grievance tracking
+- Weather updates for farmers
+```
