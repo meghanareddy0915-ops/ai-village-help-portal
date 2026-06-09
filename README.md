@@ -20,6 +20,13 @@ AI Village Help Portal is a smart public service portal for village people.
 - Pandas
 - GitLab
 
+## Requirements
+
+- Python 3.10 or above
+- Streamlit
+- Pandas
+- Internet Connection
+
 ## Advantages
 
 - Easy for villagers to understand
