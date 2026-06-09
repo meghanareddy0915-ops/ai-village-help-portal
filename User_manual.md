@@ -9,3 +9,11 @@ Open terminal and run:
 
 ```bash
 python -m streamlit run app.py
+
+## Future Improvements
+
+- Telugu language support
+- Voice assistant
+- Real AI chatbot
+- GPS-based complaint tracking
+- SMS notifications
