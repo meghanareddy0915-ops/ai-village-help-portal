@@ -1,2 +1,7 @@
 streamlit
 pandas
+pytest
+ruff
+mypy
+bandit
+pip-audit
