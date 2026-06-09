@@ -221,6 +221,26 @@ elif menu == "Farmer Help":
                 "Consult agriculture officer before spraying pesticide."
             ]
         },
+        "root rot": {
+            "reason": "Root rot may happen due to excess water or fungal infection.",
+            "solution": [
+                "Improve soil drainage.",
+                "Avoid overwatering.",
+                "Remove affected plants carefully.",
+                "Consult agriculture officer if spread increases."
+            ]
+
+        },
+
+        "low yield": {
+            "reason": "Low yield may happen due to poor soil nutrition or crop disease.",
+            "solution": [
+                "Use organic manure.",
+                "Check irrigation properly.",
+                "Do soil testing.",
+                "Use proper fertilizer dosage."
+            ]
+        },
         "leaf spot": {
             "reason": "Leaf spots may happen due to fungal or bacterial infection.",
             "solution": [
