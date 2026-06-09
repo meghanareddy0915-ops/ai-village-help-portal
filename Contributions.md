@@ -1,6 +1,3 @@
-## 3. `Contributions.md`
-
-```md
 # Contributions
 
 ## Project Name
