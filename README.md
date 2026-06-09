@@ -35,6 +35,14 @@ AI Village Help Portal is a smart public service portal for village people.
 - Supports complaint reporting
 - Provides emergency support
 
+## Target Users
+
+- Farmers
+- Students
+- Job Seekers
+- Village Citizens
+- Government Service Users
+
 ## How to Run
 
 ```bash
