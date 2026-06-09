@@ -501,6 +501,25 @@ elif menu == "Health Support":
             ],
             "danger": "Face swelling, fever, severe pain, or difficulty opening mouth."
         },
+        "ear pain": {
+             "guidance": "Ear pain may happen due to infection, cold, or injury.",
+             "reduce": [
+                 "Keep ear clean and dry.",
+                 "Avoid inserting objects into ear.",
+                 "Visit doctor if pain continues."
+            ],
+            "danger": "Severe pain, swelling, pus, or hearing problem."
+        },
+
+        "dehydration": {
+             "guidance": "Dehydration happens when body loses too much water.",
+             "reduce": [
+                "Drink ORS or water regularly.",
+                "Avoid too much sun exposure.",
+                "Eat fruits and healthy food."
+            ],
+            "danger": "Severe weakness, dizziness, or unconsciousness."
+        },
         "back pain": {
             "guidance": "Back pain may happen due to posture, heavy lifting, or muscle strain.",
             "reduce": [
