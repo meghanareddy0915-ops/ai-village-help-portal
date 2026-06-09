@@ -722,6 +722,8 @@ elif menu == "Emergency Contacts":
         "Women Helpline": "1091",
         "Child Helpline": "1098",
         "Disaster Management": "1078"
+        "Women Safety Helpline": "181"
+        "Mental Health Helpline": "14416"
     }
 
     for service, number in contacts.items():
