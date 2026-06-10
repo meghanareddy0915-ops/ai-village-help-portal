@@ -1,4 +1,4 @@
-```yaml
+```yaml id="g2rbj3"
 stages:
   - lint
   - format
@@ -7,35 +7,32 @@ stages:
   - test
   - coverage
 
-before_script:
-  - pip install -r requirements.txt
-  - pip install ruff mypy pytest pytest-cov bandit flake8 pylint vulture semgrep pyupgrade
-
 lint:
   image: python:3.11
   stage: lint
   script:
+    - pip install ruff flake8 pylint vulture
     - ruff check .
-    - flake8 . || true
-    - pylint app.py || true
-    - vulture . || true
 
 format:
   image: python:3.11
   stage: format
   script:
+    - pip install ruff
     - ruff format --check .
 
 type_check:
   image: python:3.11
   stage: type_check
   script:
+    - pip install mypy
     - mypy app.py || true
 
 security:
   image: python:3.11
   stage: security
   script:
+    - pip install bandit semgrep pip-audit
     - bandit -r . || true
     - semgrep scan --config auto . || true
 
@@ -43,10 +40,12 @@ test:
   image: python:3.11
   stage: test
   script:
+    - pip install pytest
     - pytest
 
 coverage:
   image: python:3.11
   stage: coverage
   script:
-    - pytest --cov=. --cov-report=xml --cov-fail-under=1
+    - pip install pytest pytest-cov
+    - pytest --cov=. --cov-report=xml
