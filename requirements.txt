@@ -1,6 +1,7 @@
 streamlit
 pandas
 pytest
+pytest-cov
 ruff
 mypy
 bandit
