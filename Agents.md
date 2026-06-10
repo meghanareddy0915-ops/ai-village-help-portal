@@ -1,29 +1,26 @@
-# Agents Used in AI Village Help Portal
+# AGENTS
 
-## 1. Government Service Assistant
+## Purpose
 
-Helps users understand Aadhaar, PAN, ration card, certificates, pension, voter ID, and government schemes.
+This repository follows AI-assisted development practices.
 
-## 2. Farmer Help Assistant
+## Responsibilities
 
-Provides crop guidance for problems like yellow leaves, pest attack, leaf spots, less growth, water issues, fertilizer confusion, and crop diseases.
+- Maintain code quality
+- Follow coding standards
+- Keep documentation updated
+- Add tests for new features
 
-## 3. Health Guidance Assistant
+## Development Workflow
 
-Provides basic awareness for health issues like fever, headache, cough, stomach pain, vomiting, diarrhea, weakness, tooth pain, burns, injuries, and pregnancy care.
+1. Create a feature branch
+2. Implement changes
+3. Run linting and tests
+4. Submit merge request
 
-## 4. Complaint Assistant
+## Quality Requirements
 
-Helps citizens report public issues like garbage, road damage, water problems, drainage issues, streetlight issues, and electricity problems.
-
-## 5. Education Assistant
-
-Guides students about scholarships and education support.
-
-## 6. Jobs and Skills Assistant
-
-Helps youth understand job portals and skill development opportunities.
-
-## 7. Emergency Assistant
-
-Provides important emergency contact numbers.
+- Ruff must pass
+- Mypy must pass
+- Bandit must pass
+- Tests must pass

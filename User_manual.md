@@ -1,19 +1,31 @@
-# User Manual
+# AI Village Help Portal - User Manual
 
-## Project Name
-AI Village Help Portal
+## Introduction
 
-## How to Start
+AI Village Help Portal is an AI-powered platform designed to help users access village-related information and services efficiently.
 
-Open terminal and run:
+## Features
 
-```bash
-python -m streamlit run app.py
+* Village information lookup
+* Community support assistance
+* User-friendly interface
+* Fast search functionality
 
-## Future Improvements
+## Getting Started
 
-- Telugu language support
-- Voice assistant
-- Real AI chatbot
-- GPS-based complaint tracking
-- SMS notifications
+1. Clone the repository.
+2. Install dependencies.
+3. Configure environment variables.
+4. Run the application.
+
+## Usage
+
+1. Open the application.
+2. Enter your query.
+3. View the AI-generated response.
+
+## Troubleshooting
+
+* Verify internet connectivity.
+* Ensure environment variables are configured.
+* Check application logs for errors.
