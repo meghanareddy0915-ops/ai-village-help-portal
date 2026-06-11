@@ -1,448 +1,220 @@
 import streamlit as st
+import pandas as pd
+from datetime import datetime
+from deep_translator import GoogleTranslator
 
-st.set_page_config(page_title="AI Village Help Portal", layout="wide")
+st.set_page_config(page_title="AI Village Help Portal", page_icon="🏡", layout="wide")
 
-# =========================
-# PAGE TITLE
-# =========================
-
-st.title("🏡 AI Village Help Portal")
-st.write("A smart public service portal for village people.")
-
-# =========================
-# SERVICES DATA
-# =========================
-
-all_services = {
-
-    "aadhaar card": {
-        "title": "Aadhaar Card",
-        "details": "Aadhaar is used for identity verification, bank linking, SIM verification, and government schemes.",
-        "steps": [
-            "Visit nearest Aadhaar Seva Kendra or MeeSeva center.",
-            "Carry identity proof and address proof.",
-            "Apply for new Aadhaar or update details.",
-            "Give biometrics if required.",
-            "Collect acknowledgement slip.",
-            "Track Aadhaar status online."
-        ],
-        "website": "https://uidai.gov.in"
-    },
-
-    "pan card": {
-        "title": "PAN Card",
-        "details": "PAN card is used for banking, tax filing, and financial services.",
-        "steps": [
-            "Visit PAN card official website.",
-            "Fill PAN application form.",
-            "Upload Aadhaar and photo.",
-            "Pay application fee.",
-            "Submit application.",
-            "Track PAN status online."
-        ],
-        "website": "https://www.onlineservices.nsdl.com"
-    },
-
-    "ration card": {
-        "title": "Ration Card",
-        "details": "Ration card helps families get subsidized food items.",
-        "steps": [
-            "Visit MeeSeva or ration office.",
-            "Carry Aadhaar and income proof.",
-            "Submit family details.",
-            "Apply for new ration card.",
-            "Track application status."
-        ],
-        "website": "https://epds.telangana.gov.in"
-    },
-
-    "income certificate": {
-        "title": "Income Certificate",
-        "details": "Income certificate is required for scholarships and welfare schemes.",
-        "steps": [
-            "Visit MeeSeva center.",
-            "Submit Aadhaar and income proof.",
-            "Fill certificate application form.",
-            "Pay required fee.",
-            "Collect certificate after approval."
-        ],
-        "website": "https://tg.meeseva.gov.in"
-    },
-
-    "caste certificate": {
-        "title": "Caste Certificate",
-        "details": "Caste certificate is used for reservations and government benefits.",
-        "steps": [
-            "Visit MeeSeva center.",
-            "Submit Aadhaar and family documents.",
-            "Fill caste certificate application.",
-            "Submit required proofs.",
-            "Collect certificate after approval."
-        ],
-        "website": "https://tg.meeseva.gov.in"
-    },
-
-    "birth certificate": {
-        "title": "Birth Certificate",
-        "details": "Birth certificate is an official proof of birth.",
-        "steps": [
-            "Visit municipality office or MeeSeva.",
-            "Submit hospital details.",
-            "Fill birth registration form.",
-            "Verify parent details.",
-            "Download or collect certificate."
-        ],
-        "website": "https://crsorgi.gov.in"
-    },
-
-    "farmer support": {
-        "title": "Farmer Support",
-        "details": "Guidance for crops, fertilizers, and farming support.",
-        "steps": [
-            "Select crop type.",
-            "Check fertilizer suggestions.",
-            "Read seasonal farming advice.",
-            "Use crop disease guidance.",
-            "Contact agriculture officer if needed."
-        ],
-        "website": "https://farmer.gov.in"
-    },
-
-    "crop insurance": {
-        "title": "Crop Insurance",
-        "details": "Insurance support for crop damage due to natural disasters.",
-        "steps": [
-            "Open PMFBY website.",
-            "Register farmer details.",
-            "Enter crop and land details.",
-            "Submit bank account information.",
-            "Track claim status online."
-        ],
-        "website": "https://pmfby.gov.in"
-    },
-
-    "pm kisan": {
-        "title": "PM Kisan Scheme",
-        "details": "Financial support scheme for eligible farmers.",
-        "steps": [
-            "Visit PM Kisan website.",
-            "Check eligibility.",
-            "Enter Aadhaar details.",
-            "Submit land details.",
-            "Track beneficiary status."
-        ],
-        "website": "https://pmkisan.gov.in"
-    },
-
-    "health guidance": {
-        "title": "Health Guidance",
-        "details": "Basic health support and awareness for common problems.",
-        "steps": [
-            "Type health issue in search.",
-            "Read prevention methods.",
-            "Check home care tips.",
-            "Visit nearest hospital if symptoms continue.",
-            "Call emergency services if needed."
-        ],
-        "website": "https://www.nhp.gov.in"
-    },
-
-    "fever": {
-        "title": "Fever Guidance",
-        "details": "Guidance for fever reduction and care.",
-        "steps": [
-            "Drink plenty of water.",
-            "Take proper rest.",
-            "Eat light food.",
-            "Check temperature regularly.",
-            "Visit doctor if fever continues."
-        ],
-        "website": "https://www.nhp.gov.in"
-    },
-
-    "cough": {
-        "title": "Cough Guidance",
-        "details": "Guidance for reducing cough problems.",
-        "steps": [
-            "Drink warm water.",
-            "Avoid cold food.",
-            "Take steam inhalation.",
-            "Use doctor prescribed medicine.",
-            "Visit hospital if cough continues."
-        ],
-        "website": "https://www.nhp.gov.in"
-    },
-
-    "headache": {
-        "title": "Headache Guidance",
-        "details": "Guidance for headache relief.",
-        "steps": [
-            "Take proper rest.",
-            "Drink enough water.",
-            "Avoid stress.",
-            "Sleep properly.",
-            "Visit doctor if pain continues."
-        ],
-        "website": "https://www.nhp.gov.in"
-    },
-
-    "stomach pain": {
-        "title": "Stomach Pain Guidance",
-        "details": "Guidance for stomach pain reduction.",
-        "steps": [
-            "Drink clean water.",
-            "Avoid oily food.",
-            "Eat light meals.",
-            "Take rest.",
-            "Visit doctor if pain becomes severe."
-        ],
-        "website": "https://www.nhp.gov.in"
-    },
-
-    "complaint": {
-        "title": "Public Complaint",
-        "details": "Citizens can report garbage, water, roads, and streetlight problems.",
-        "steps": [
-            "Select complaint type.",
-            "Enter village/location details.",
-            "Upload photo if available.",
-            "Submit complaint.",
-            "Track complaint status."
-        ],
-        "website": "https://pgportal.gov.in"
-    },
-
-    "streetlight": {
-        "title": "Streetlight Complaint",
-        "details": "Report damaged or non-working streetlights.",
-        "steps": [
-            "Enter streetlight location.",
-            "Upload image if possible.",
-            "Submit complaint.",
-            "Track complaint online."
-        ],
-        "website": "https://pgportal.gov.in"
-    },
-
-    "water problem": {
-        "title": "Water Supply Complaint",
-        "details": "Report drinking water or water supply problems.",
-        "steps": [
-            "Enter village details.",
-            "Describe water issue.",
-            "Submit complaint.",
-            "Track complaint status."
-        ],
-        "website": "https://pgportal.gov.in"
-    },
-
-    "road issue": {
-        "title": "Road Issue Complaint",
-        "details": "Citizens can report damaged roads and potholes.",
-        "steps": [
-            "Take photo of damaged road.",
-            "Enter location details.",
-            "Submit complaint.",
-            "Track complaint online."
-        ],
-        "website": "https://pgportal.gov.in"
-    },
-
-    "electricity bill": {
-        "title": "Electricity Bill Payment",
-        "details": "Citizens can check and pay electricity bills online.",
-        "steps": [
-            "Open electricity department website.",
-            "Enter service number.",
-            "Check bill amount.",
-            "Pay online.",
-            "Download receipt."
-        ],
-        "website": "https://www.tssouthernpower.com"
-    },
-
-    "gas connection": {
-        "title": "Gas Connection",
-        "details": "Apply for new LPG gas connection or refill booking.",
-        "steps": [
-            "Visit LPG website or gas agency.",
-            "Submit Aadhaar and address proof.",
-            "Apply for connection.",
-            "Complete verification.",
-            "Receive gas connection."
-        ],
-        "website": "https://www.mylpg.in"
-    },
-
-    "passport": {
-        "title": "Passport Service",
-        "details": "Apply for new passport or passport renewal.",
-        "steps": [
-            "Visit Passport Seva website.",
-            "Register account.",
-            "Fill passport application.",
-            "Book appointment.",
-            "Visit passport office."
-        ],
-        "website": "https://www.passportindia.gov.in"
-    },
-
-    "driving licence": {
-        "title": "Driving Licence",
-        "details": "Apply for learner or driving licence.",
-        "steps": [
-            "Visit Parivahan website.",
-            "Fill driving licence form.",
-            "Upload documents.",
-            "Book test slot.",
-            "Attend driving test."
-        ],
-        "website": "https://parivahan.gov.in"
-    },
-
-    "jobs": {
-        "title": "Jobs and Skill Training",
-        "details": "Information about jobs and skill development programs.",
-        "steps": [
-            "Visit employment portal.",
-            "Search available jobs.",
-            "Apply for skill training.",
-            "Attend training program.",
-            "Apply for jobs."
-        ],
-        "website": "https://www.ncs.gov.in"
-    },
-
-    "education": {
-        "title": "Scholarships and Education",
-        "details": "Students can apply for scholarships and educational schemes.",
-        "steps": [
-            "Visit scholarship portal.",
-            "Check eligibility.",
-            "Upload student documents.",
-            "Submit application.",
-            "Track scholarship status."
-        ],
-        "website": "https://scholarships.gov.in"
-    },
-
-    "emergency": {
-        "title": "Emergency Contacts",
-        "details": "Emergency contact numbers for public safety.",
-        "steps": [
-            "Police: 100",
-            "Ambulance: 108",
-            "Fire Service: 101",
-            "Women Helpline: 181"
-        ],
-        "website": "https://www.india.gov.in"
-    }
+language_codes = {
+    "English": "en",
+    "Telugu": "te",
+    "Hindi": "hi",
+    "Tamil": "ta",
+    "Kannada": "kn",
+    "Malayalam": "ml",
+    "Marathi": "mr",
+    "Gujarati": "gu",
+    "Bengali": "bn",
+    "Punjabi": "pa",
+    "Odia": "or",
+    "Urdu": "ur",
 }
 
-# =========================
-# SIDEBAR
-# =========================
+@st.cache_data(show_spinner=False)
+def translate_text(text, lang):
+    if lang == "English":
+        return text
+    try:
+        return GoogleTranslator(source="auto", target=language_codes[lang]).translate(text)
+    except Exception:
+        return text
 
-st.sidebar.title("Services")
+st.sidebar.title("🌐 Language")
+language = st.sidebar.selectbox("Select Language", list(language_codes.keys()))
 
+st.sidebar.title(translate_text("Services", language))
 user_input = st.sidebar.text_input(
-    "Type your problem or service",
-    placeholder="Example: Aadhaar, fever, crop insurance"
+    translate_text("Type your problem or service", language),
+    placeholder="Aadhaar, fever, crop insurance"
 )
 
-# =========================
-# HOME PAGE
-# =========================
+st.title("🏡 " + translate_text("AI Village Help Portal", language))
+st.write(translate_text("A smart public service portal for village people.", language))
+
+services = {
+    "aadhaar": {
+        "title": "Aadhaar Card",
+        "details": "Aadhaar is used for identity verification, bank linking, SIM verification, and government schemes.",
+        "steps": ["Visit nearest Aadhaar Seva Kendra or MeeSeva center.", "Carry identity proof and address proof.", "Apply for new Aadhaar or update details.", "Collect acknowledgement slip.", "Track Aadhaar status online."],
+        "website": "https://uidai.gov.in"
+    },
+    "pan": {
+        "title": "PAN Card",
+        "details": "PAN is used for banking, tax filing, and financial services.",
+        "steps": ["Open PAN application website.", "Fill personal details.", "Upload documents.", "Pay fee if required.", "Track PAN status online."],
+        "website": "https://www.onlineservices.nsdl.com"
+    },
+    "ration": {
+        "title": "Ration Card / Rice Card",
+        "details": "Ration card helps families receive food grains and welfare benefits.",
+        "steps": ["Visit MeeSeva or village secretariat.", "Submit family details.", "Attach Aadhaar, address proof, and income proof.", "Track application status."],
+        "website": "https://ts.meeseva.telangana.gov.in/meeseva/"
+    },
+    "income": {
+        "title": "Income Certificate",
+        "details": "Income certificate is useful for scholarships, schemes, and fee reimbursement.",
+        "steps": ["Visit MeeSeva center.", "Fill application form.", "Upload required documents.", "Pay fee if required.", "Download certificate after approval."],
+        "website": "https://ts.meeseva.telangana.gov.in/meeseva/"
+    },
+    "caste": {
+        "title": "Caste Certificate",
+        "details": "Caste certificate is useful for education, scholarships, jobs, and reservations.",
+        "steps": ["Visit MeeSeva center.", "Fill caste certificate application.", "Upload required documents.", "Submit application.", "Download certificate after approval."],
+        "website": "https://ts.meeseva.telangana.gov.in/meeseva/"
+    },
+    "pension": {
+        "title": "Pension Services",
+        "details": "Pension schemes support senior citizens, widows, and disabled persons.",
+        "steps": ["Check eligibility.", "Collect Aadhaar, bank passbook, income certificate, and photo.", "Apply through MeeSeva or village secretariat.", "Track pension approval status."],
+        "website": "https://ts.meeseva.telangana.gov.in/meeseva/"
+    },
+    "voter": {
+        "title": "Voter ID",
+        "details": "Voter ID is used for voting and identity proof.",
+        "steps": ["Visit voter service portal.", "Apply for new voter ID or correction.", "Upload age and address proof.", "Submit application.", "Track status online."],
+        "website": "https://voters.eci.gov.in"
+    },
+    "farmer": {
+        "title": "Farmer Support",
+        "details": "Farmer support gives crop, fertilizer, pest, and farming guidance.",
+        "steps": ["Check crop problem.", "Use organic compost.", "Avoid overwatering.", "Take crop photo if disease appears.", "Contact agriculture officer if issue continues."],
+        "website": "https://agricoop.gov.in"
+    },
+    "crop insurance": {
+        "title": "Crop Insurance",
+        "details": "Crop insurance helps farmers during crop loss due to natural problems.",
+        "steps": ["Open PMFBY website.", "Submit farmer details.", "Enter crop and land details.", "Track claim status online."],
+        "website": "https://pmfby.gov.in"
+    },
+    "pm kisan": {
+        "title": "PM-KISAN Scheme",
+        "details": "PM-KISAN provides financial support to eligible farmers.",
+        "steps": ["Open PM-KISAN website.", "Check eligibility.", "Enter Aadhaar and land details.", "Submit bank account details.", "Track beneficiary status."],
+        "website": "https://pmkisan.gov.in"
+    },
+    "fever": {
+        "title": "Fever Guidance",
+        "details": "Fever may happen due to infection, heat, or seasonal illness.",
+        "steps": ["Drink plenty of water.", "Take rest.", "Wear light clothes.", "Check temperature.", "Visit doctor if fever continues."],
+        "website": "https://www.mohfw.gov.in"
+    },
+    "cough": {
+        "title": "Cough Guidance",
+        "details": "Cough may happen due to cold, dust, allergy, or infection.",
+        "steps": ["Drink warm water.", "Avoid cold drinks.", "Avoid dust and smoke.", "Use steam carefully.", "Visit doctor if cough continues."],
+        "website": "https://www.mohfw.gov.in"
+    },
+    "headache": {
+        "title": "Headache Guidance",
+        "details": "Headache may happen due to stress, dehydration, lack of sleep, or screen usage.",
+        "steps": ["Drink water.", "Rest in a quiet place.", "Reduce screen time.", "Sleep properly.", "Visit doctor if severe."],
+        "website": "https://www.mohfw.gov.in"
+    },
+    "stomach pain": {
+        "title": "Stomach Pain Guidance",
+        "details": "Stomach pain may happen due to gas, indigestion, unsafe food, or infection.",
+        "steps": ["Drink clean water.", "Eat light food.", "Avoid oily food.", "Take rest.", "Visit doctor if pain is severe."],
+        "website": "https://www.mohfw.gov.in"
+    },
+    "scholarship": {
+        "title": "Education & Scholarships",
+        "details": "Scholarships help students get financial support for education.",
+        "steps": ["Check eligibility.", "Collect Aadhaar, income certificate, marks memo, and bank details.", "Register online.", "Submit application.", "Track status."],
+        "website": "https://scholarships.gov.in"
+    },
+    "job": {
+        "title": "Jobs & Skills",
+        "details": "This helps youth find jobs and skill development programs.",
+        "steps": ["Register on job portal.", "Create profile.", "Add education and skills.", "Search jobs or training.", "Apply for opportunities."],
+        "website": "https://www.ncs.gov.in"
+    },
+    "electricity": {
+        "title": "Electricity Bill Payment",
+        "details": "Citizens can check and pay electricity bills online.",
+        "steps": ["Open electricity website.", "Enter service number.", "Check bill amount.", "Pay online.", "Save receipt."],
+        "website": "https://www.tssouthernpower.com"
+    },
+    "passport": {
+        "title": "Passport Service",
+        "details": "Citizens can apply for passport or passport renewal.",
+        "steps": ["Open Passport Seva website.", "Register or login.", "Fill application form.", "Book appointment.", "Visit passport office with documents."],
+        "website": "https://www.passportindia.gov.in"
+    },
+    "driving licence": {
+        "title": "Driving Licence",
+        "details": "Citizens can apply for learner licence or driving licence.",
+        "steps": ["Open Parivahan portal.", "Fill application form.", "Upload documents.", "Book test slot.", "Attend test."],
+        "website": "https://parivahan.gov.in"
+    },
+    "complaint": {
+        "title": "Public Complaint",
+        "details": "Citizens can report garbage, road, water, drainage, and streetlight problems.",
+        "steps": ["Enter name and village.", "Select complaint type.", "Upload photo if available.", "Submit complaint.", "Track complaint status."],
+        "website": "https://pgportal.gov.in"
+    },
+    "garbage": {
+        "title": "Garbage Complaint",
+        "details": "Citizens can report garbage collection or cleanliness problems.",
+        "steps": ["Note exact location.", "Take photo if available.", "Submit complaint.", "Follow up with local office."],
+        "website": "https://pgportal.gov.in"
+    },
+    "emergency": {
+        "title": "Emergency Contacts",
+        "details": "Important emergency numbers for public safety.",
+        "steps": ["Police: 100", "Ambulance: 108", "Fire Service: 101", "Women Helpline: 181", "Child Helpline: 1098"],
+        "website": "https://112.gov.in"
+    },
+}
 
 if user_input == "":
+    st.header(translate_text("Welcome to AI Village Help Portal", language))
+    st.write(translate_text("Type your issue or service name in the sidebar search box.", language))
 
-    st.header("Welcome to AI Village Help Portal")
-
-    st.write("""
-This project helps villagers access important services easily.
-Type your issue or service name in the sidebar search box.
-
-Examples:
-- Aadhaar Card
-- PAN Card
-- Fever
-- Farmer Support
-- Complaint
-- Crop Insurance
-- Jobs
-- Education
-""")
+    st.write(translate_text("Examples:", language))
+    st.write("- Aadhaar")
+    st.write("- Fever")
+    st.write("- Farmer")
+    st.write("- Crop Insurance")
+    st.write("- Scholarship")
+    st.write("- Complaint")
+    st.write("- Passport")
 
     col1, col2, col3 = st.columns(3)
-
-    col1.metric("Services", "45+")
-    col2.metric("Government Support", "Available")
-    col3.metric("Village Help", "24/7")
-
-# =========================
-# SEARCH SERVICE
-# =========================
-
-# =========================
-# SEARCH SERVICE
-# =========================
+    col1.metric(translate_text("Services", language), "45+")
+    col2.metric(translate_text("Government Support", language), translate_text("Available", language))
+    col3.metric(translate_text("Village Help", language), "24/7")
 
 else:
-
     query = user_input.lower().strip()
-
     found = False
 
-    st.markdown("---")
-
-    col1, col2, col3 = st.columns([1,4,1])
+    col1, col2, col3 = st.columns([1, 4, 1])
 
     with col2:
-
-        for key, value in all_services.items():
-
+        for key, value in services.items():
             if query in key:
-
                 found = True
+                st.success(translate_text("Service Found Successfully", language))
+                st.header(translate_text(value["title"], language))
+                st.info(translate_text(value["details"], language))
 
-                st.success("Service Found Successfully")
-
-                st.header(f"📌 {value['title']}")
-
-                st.info(value["details"])
-
-                st.subheader("✅ Steps To Follow")
-
-                step_no = 1
-
+                st.subheader(translate_text("✅ Steps", language))
                 for step in value["steps"]:
-                    st.write(f"{step_no}. {step}")
-                    step_no += 1
+                    st.write("• " + translate_text(step, language))
 
-                st.subheader("🌐 Official Website")
-
-                st.markdown(
-                    f"""
-                    <a href="{value['website']}" target="_blank">
-                        Open Website
-                    </a>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-                st.markdown("---")
+                st.subheader(translate_text("🌐 Website", language))
+                st.markdown(value["website"])
 
         if not found:
-
-            st.error("❌ Service Not Found")
-
-            st.subheader("Try Searching Like:")
-
-            st.write("• Aadhaar")
-            st.write("• PAN Card")
-            st.write("• Fever")
-            st.write("• Farmer Support")
-            st.write("• Crop Insurance")
-            st.write("• Complaint")
-            st.write("• Jobs")
-            st.write("• Passport")
+            st.error(translate_text("Service not found.", language))
+            st.write(translate_text("Try Aadhaar, fever, farmer, crop insurance, scholarship, complaint, passport, or job.", language))

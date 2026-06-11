@@ -11,3 +11,4 @@ pylint
 vulture
 semgraph
 pyupgrade
+deep-translator
