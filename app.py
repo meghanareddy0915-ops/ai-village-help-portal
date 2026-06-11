@@ -1,4 +1,4 @@
- import streamlit as st
+import streamlit as st
 
 st.set_page_config(page_title="AI Village Help Portal", layout="wide")
 
@@ -383,39 +383,66 @@ Examples:
 # SEARCH SERVICE
 # =========================
 
+# =========================
+# SEARCH SERVICE
+# =========================
+
 else:
 
-    query = user_input.lower()
+    query = user_input.lower().strip()
 
     found = False
 
-    for key, value in all_services.items():
+    st.markdown("---")
 
-        if query in key:
+    col1, col2, col3 = st.columns([1,4,1])
 
-            found = True
+    with col2:
 
-            st.header(value["title"])
+        for key, value in all_services.items():
 
-            st.info(value["details"])
+            if query in key:
 
-            st.subheader("✅ Steps")
+                found = True
 
-            for step in value["steps"]:
-                st.write(f"• {step}")
+                st.success("Service Found Successfully")
 
-            st.subheader("🌐 Website")
+                st.header(f"📌 {value['title']}")
 
-            st.markdown(value["website"])
+                st.info(value["details"])
 
-    if not found:
+                st.subheader("✅ Steps To Follow")
 
-        st.error("Service not found.")
+                step_no = 1
 
-        st.write("Try searching with:")
-        st.write("- Aadhaar")
-        st.write("- Fever")
-        st.write("- Farmer Support")
-        st.write("- Complaint")
-        st.write("- Passport")
-        st.write("- Jobs")
+                for step in value["steps"]:
+                    st.write(f"{step_no}. {step}")
+                    step_no += 1
+
+                st.subheader("🌐 Official Website")
+
+                st.markdown(
+                    f"""
+                    <a href="{value['website']}" target="_blank">
+                        Open Website
+                    </a>
+                    """,
+                    unsafe_allow_html=True
+                )
+
+                st.markdown("---")
+
+        if not found:
+
+            st.error("❌ Service Not Found")
+
+            st.subheader("Try Searching Like:")
+
+            st.write("• Aadhaar")
+            st.write("• PAN Card")
+            st.write("• Fever")
+            st.write("• Farmer Support")
+            st.write("• Crop Insurance")
+            st.write("• Complaint")
+            st.write("• Jobs")
+            st.write("• Passport")
