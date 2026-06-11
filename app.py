@@ -2,10 +2,74 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-st.set_page_config(page_title="AI Village Help Portal", page_icon="🏡", layout="wide")
+st.set_page_config(
+    page_title="AI Village Help Portal",
+    page_icon="🏡",
+    layout="wide"
+)
 
-st.title("🏡 AI Village Help Portal")
-st.write("A smart public service portal for village people.")
+# ---------------- CUSTOM CSS ----------------
+st.markdown(
+    """
+    <style>
+    .hero {
+        background: linear-gradient(90deg, #2E8B57, #1E90FF);
+        padding: 30px;
+        border-radius: 18px;
+        color: white;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+        margin-bottom: 8px;
+    }
+
+    .hero p {
+        font-size: 18px;
+    }
+
+    .card {
+        background-color: #f7f9fc;
+        padding: 20px;
+        border-radius: 15px;
+        border-left: 6px solid #2E8B57;
+        box-shadow: 0px 2px 10px rgba(0,0,0,0.08);
+        margin-bottom: 18px;
+        min-height: 160px;
+    }
+
+    .small-card {
+        background-color: #ffffff;
+        padding: 18px;
+        border-radius: 12px;
+        border: 1px solid #e6e6e6;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.06);
+        margin-bottom: 15px;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 18px;
+        color: gray;
+        margin-top: 35px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# ---------------- HEADER ----------------
+st.markdown(
+    """
+    <div class="hero">
+        <h1>🏡 AI Village Help Portal</h1>
+        <p>Smart Digital Public Service Support for Rural Citizens</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 menu = st.sidebar.selectbox(
     "Choose Service",
@@ -22,31 +86,94 @@ menu = st.sidebar.selectbox(
     ]
 )
 
+
 # ---------------- HOME ----------------
 if menu == "Home":
-    st.header("Welcome to AI Village Help Portal")
+    st.markdown("## 🌍 Welcome to AI Village Help Portal")
+    st.write(
+        "A one-stop digital platform that helps villagers access government services, "
+        "health guidance, farmer support, education help, jobs, complaints, and emergency contacts."
+    )
 
-    st.write("""
-    This project helps villagers access important public services in one place.
-    It gives information about government documents, schemes, farming, health,
-    complaints, education, jobs, and emergency services.
-    """)
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Services", "8+")
+    col2.metric("Complaint Types", "7")
+    col3.metric("Guidance Areas", "25+")
+    col4.metric("Emergency Contacts", "6")
 
-    st.subheader("Main Services")
-    st.write("""
-    - Aadhaar and PAN services
-    - Ration card / Rice card
-    - Income, caste, residence, and birth certificates
-    - Pension and welfare schemes
-    - Farmer crop support
-    - Health guidance
-    - Public complaint reporting
-    - Scholarships and education help
-    - Jobs and skill training
-    - Emergency contacts
-    """)
+    st.markdown("### 🚀 Main Features")
 
-    st.success("This project is useful for rural people because it saves time and gives correct service guidance.")
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.markdown(
+            """
+            <div class="card">
+            <h3>🏛️ Government Services</h3>
+            <p>Aadhaar, PAN, ration card, certificates, pension, voter ID and schemes.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with c2:
+        st.markdown(
+            """
+            <div class="card">
+            <h3>🌾 Farmer Help</h3>
+            <p>Crop guidance, pest help, fertilizer advice, water issues and crop disease tips.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with c3:
+        st.markdown(
+            """
+            <div class="card">
+            <h3>🏥 Health Support</h3>
+            <p>Basic awareness for fever, cough, headache, stomach pain, injuries and pregnancy care.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    c4, c5, c6 = st.columns(3)
+
+    with c4:
+        st.markdown(
+            """
+            <div class="card">
+            <h3>📝 Complaint Reporting</h3>
+            <p>Report garbage, road, water, streetlight, drainage and electricity problems.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with c5:
+        st.markdown(
+            """
+            <div class="card">
+            <h3>🎓 Education Help</h3>
+            <p>Scholarship guidance and education support for rural students.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with c6:
+        st.markdown(
+            """
+            <div class="card">
+            <h3>💼 Jobs & Skills</h3>
+            <p>Skill training and job portal guidance for rural youth.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    st.success("This portal saves time and helps villagers get correct service guidance.")
 
 
 # ---------------- GOVERNMENT SERVICES ----------------
@@ -69,102 +196,135 @@ elif menu == "Government Services":
         ]
     )
 
-    if service == "Aadhaar Card":
-        st.subheader("Aadhaar Card Service")
-        st.write("""
-        Aadhaar is used for identity verification, bank linking, SIM verification,
-        government schemes, and other public services.
-        """)
-        st.write("""
-        Steps:
-        1. Visit nearest Aadhaar Seva Kendra or MeeSeva center.
-        2. Carry identity proof and address proof.
-        3. Apply for new Aadhaar or update details.
-        4. Give biometrics if required.
-        5. Collect acknowledgement slip.
-        6. Track Aadhaar status online.
-        """)
-        st.info("Website: https://uidai.gov.in")
+    service_info = {
+        "Aadhaar Card": {
+            "details": "Aadhaar is used for identity verification, bank linking, SIM verification, and government schemes.",
+            "steps": [
+                "Visit nearest Aadhaar Seva Kendra or MeeSeva center.",
+                "Carry identity proof and address proof.",
+                "Apply for new Aadhaar or update details.",
+                "Give biometrics if required.",
+                "Collect acknowledgement slip.",
+                "Track Aadhaar status online."
+            ],
+            "website": "https://uidai.gov.in"
+        },
+        "PAN Card": {
+            "details": "PAN is useful for bank accounts, tax services, scholarships, and financial work.",
+            "steps": [
+                "Open PAN application website.",
+                "Fill personal details.",
+                "Upload documents.",
+                "Pay fee if required.",
+                "Submit application.",
+                "Track PAN status online."
+            ],
+            "website": "https://www.onlineservices.nsdl.com/paam/endUserRegisterContact.html"
+        },
+        "Ration Card / Rice Card": {
+            "details": "Ration card helps families receive food grains and welfare benefits.",
+            "steps": [
+                "Visit MeeSeva or village secretariat.",
+                "Submit family details.",
+                "Attach Aadhaar, address proof, and income proof.",
+                "Submit application.",
+                "Track application status."
+            ],
+            "website": "https://ts.meeseva.telangana.gov.in/meeseva/"
+        },
+        "Income Certificate": {
+            "details": "Income certificate is useful for scholarships, schemes, and fee reimbursement.",
+            "steps": [
+                "Visit MeeSeva portal or MeeSeva center.",
+                "Select income certificate service.",
+                "Fill application form.",
+                "Upload required documents.",
+                "Pay fee if required.",
+                "Download certificate after approval."
+            ],
+            "website": "https://ts.meeseva.telangana.gov.in/meeseva/"
+        },
+        "Caste Certificate": {
+            "details": "Caste certificate is useful for education, scholarships, jobs, and reservations.",
+            "steps": [
+                "Visit MeeSeva portal or MeeSeva center.",
+                "Select caste certificate service.",
+                "Fill application form.",
+                "Upload required documents.",
+                "Submit application.",
+                "Download certificate after approval."
+            ],
+            "website": "https://ts.meeseva.telangana.gov.in/meeseva/"
+        },
+        "Residence Certificate": {
+            "details": "Residence certificate is used as proof of address for education, jobs, and schemes.",
+            "steps": [
+                "Visit MeeSeva portal.",
+                "Select residence certificate.",
+                "Fill address details.",
+                "Upload address proof.",
+                "Submit application.",
+                "Track status online."
+            ],
+            "website": "https://ts.meeseva.telangana.gov.in/meeseva/"
+        },
+        "Birth Certificate": {
+            "details": "Birth certificate is official proof of date and place of birth.",
+            "steps": [
+                "Visit municipal office or MeeSeva.",
+                "Fill birth certificate application.",
+                "Upload hospital record if available.",
+                "Submit parent details.",
+                "Download certificate after approval."
+            ],
+            "website": "https://ts.meeseva.telangana.gov.in/meeseva/"
+        },
+        "Old Age / Widow / Disability Pension": {
+            "details": "Pension schemes support senior citizens, widows, and disabled persons.",
+            "steps": [
+                "Check eligibility.",
+                "Collect Aadhaar, bank passbook, income certificate, and photo.",
+                "Apply through MeeSeva or village secretariat.",
+                "Submit documents.",
+                "Track pension approval status."
+            ],
+            "website": "https://ts.meeseva.telangana.gov.in/meeseva/"
+        },
+        "Voter ID": {
+            "details": "Voter ID is used for voting and identity proof.",
+            "steps": [
+                "Visit voter service portal.",
+                "Apply for new voter ID or correction.",
+                "Upload age and address proof.",
+                "Submit application.",
+                "Track status online."
+            ],
+            "website": "https://voters.eci.gov.in"
+        },
+        "Government Schemes": {
+            "details": "Citizens can search schemes based on age, income, occupation, and category.",
+            "steps": [
+                "Search suitable scheme.",
+                "Check eligibility.",
+                "Collect required documents.",
+                "Apply online or through MeeSeva or village office.",
+                "Track application status."
+            ],
+            "website": "https://www.india.gov.in"
+        }
+    }
 
-    elif service == "PAN Card":
-        st.subheader("PAN Card Service")
-        st.write("PAN is useful for bank accounts, tax services, scholarships, and financial work.")
-        st.write("""
-        Steps:
-        1. Open PAN application website.
-        2. Fill personal details.
-        3. Upload documents.
-        4. Pay fee if required.
-        5. Submit application.
-        6. Track PAN status online.
-        """)
-        st.info("Website: https://www.onlineservices.nsdl.com/paam/endUserRegisterContact.html")
+    selected = service_info[service]
 
-    elif service == "Ration Card / Rice Card":
-        st.subheader("Ration Card / Rice Card")
-        st.write("Ration card helps families receive food grains and other welfare benefits.")
-        st.write("""
-        Steps:
-        1. Visit MeeSeva or village secretariat.
-        2. Submit family details.
-        3. Attach Aadhaar, address proof, and income proof.
-        4. Submit application.
-        5. Track application status.
-        """)
-        st.info("Website: https://ts.meeseva.telangana.gov.in/meeseva/")
+    st.markdown(f"### {service}")
+    st.info(selected["details"])
 
-    elif service in ["Income Certificate", "Caste Certificate", "Residence Certificate", "Birth Certificate"]:
-        st.subheader(service)
-        st.write("This certificate is useful for education, scholarships, jobs, and government schemes.")
-        st.write("""
-        Steps:
-        1. Visit MeeSeva portal or MeeSeva center.
-        2. Select certificate service.
-        3. Fill application form.
-        4. Upload required documents.
-        5. Pay fee if required.
-        6. Download certificate after approval.
-        """)
-        st.info("Website: https://ts.meeseva.telangana.gov.in/meeseva/")
+    st.markdown("### ✅ Steps")
+    for step in selected["steps"]:
+        st.write(f"- {step}")
 
-    elif service == "Old Age / Widow / Disability Pension":
-        st.subheader("Pension Services")
-        st.write("Pension schemes support senior citizens, widows, and disabled persons.")
-        st.write("""
-        Steps:
-        1. Check eligibility.
-        2. Collect Aadhaar, bank passbook, income certificate, and photo.
-        3. Apply through MeeSeva or village secretariat.
-        4. Submit documents.
-        5. Track pension approval status.
-        """)
-        st.info("Website: https://ts.meeseva.telangana.gov.in/meeseva/")
-
-    elif service == "Voter ID":
-        st.subheader("Voter ID Service")
-        st.write("Voter ID is used for voting and identity proof.")
-        st.write("""
-        Steps:
-        1. Visit voter service portal.
-        2. Apply for new voter ID or correction.
-        3. Upload age and address proof.
-        4. Submit application.
-        5. Track status online.
-        """)
-        st.info("Website: https://voters.eci.gov.in")
-
-    elif service == "Government Schemes":
-        st.subheader("Government Schemes")
-        st.write("Citizens can search schemes based on age, income, occupation, and category.")
-        st.write("""
-        Steps:
-        1. Search suitable scheme.
-        2. Check eligibility.
-        3. Collect required documents.
-        4. Apply online or through MeeSeva/village office.
-        5. Track application status.
-        """)
-        st.info("Website: https://www.india.gov.in")
+    st.markdown("### 🌐 Website")
+    st.write(selected["website"])
 
 
 # ---------------- FARMER HELP ----------------
@@ -173,17 +333,7 @@ elif menu == "Farmer Help":
 
     crop = st.selectbox(
         "Select Crop",
-        [
-            "Rice",
-            "Cotton",
-            "Maize",
-            "Tomato",
-            "Chilli",
-            "Groundnut",
-            "Potato",
-            "Onion",
-            "Other"
-        ]
+        ["Rice", "Cotton", "Maize", "Tomato", "Chilli", "Groundnut", "Potato", "Onion", "Other"]
     )
 
     problem = st.text_input(
@@ -210,35 +360,6 @@ elif menu == "Farmer Help":
                 "Remove heavily affected leaves if possible.",
                 "Do not use random pesticide without advice.",
                 "Contact agriculture officer for correct pesticide recommendation."
-            ]
-        },
-        "insect": {
-            "reason": "Insects can reduce crop growth and damage yield.",
-            "solution": [
-                "Observe which part of the plant is affected.",
-                "Use natural pest control methods if possible.",
-                "Keep field clean.",
-                "Consult agriculture officer before spraying pesticide."
-            ]
-        },
-        "root rot": {
-            "reason": "Root rot may happen due to excess water or fungal infection.",
-            "solution": [
-                "Improve soil drainage.",
-                "Avoid overwatering.",
-                "Remove affected plants carefully.",
-                "Consult agriculture officer if spread increases."
-            ]
-
-        },
-
-        "low yield": {
-            "reason": "Low yield may happen due to poor soil nutrition or crop disease.",
-            "solution": [
-                "Use organic manure.",
-                "Check irrigation properly.",
-                "Do soil testing.",
-                "Use proper fertilizer dosage."
             ]
         },
         "leaf spot": {
@@ -301,16 +422,6 @@ elif menu == "Farmer Help":
                 "Check roots and soil condition."
             ]
         },
-        "weeds": {
-            "reason": "Weeds take nutrients, water, and sunlight from crops.",
-            "solution": [
-                "Remove weeds regularly.",
-                "Use mulching.",
-                "Maintain proper spacing.",
-                "Remove weeds before flowering.",
-                "Keep field clean."
-            ]
-        },
         "fruit rot": {
             "reason": "Fruit rot may happen due to fungal infection, excess moisture, or poor air circulation.",
             "solution": [
@@ -354,15 +465,17 @@ elif menu == "Farmer Help":
 
         if not found:
             st.warning("This crop problem is not in the current list.")
-            st.write("""
-            Basic farmer guidance:
-            - Check soil moisture.
-            - Remove weeds.
-            - Use organic compost.
-            - Avoid overwatering.
-            - Take a clear crop photo.
-            - Visit nearest agriculture office if the problem continues.
-            """)
+            st.write(
+                """
+                Basic farmer guidance:
+                - Check soil moisture.
+                - Remove weeds.
+                - Use organic compost.
+                - Avoid overwatering.
+                - Take a clear crop photo.
+                - Visit nearest agriculture office if the problem continues.
+                """
+            )
             st.info("Agriculture Website: https://agricoop.gov.in")
 
 
@@ -370,7 +483,7 @@ elif menu == "Farmer Help":
 elif menu == "Health Support":
     st.header("🏥 Health Support")
 
-    st.write("Type your health issue and get basic guidance.")
+    st.write("Type your health issue and get basic awareness guidance.")
 
     issue = st.text_input(
         "Enter health issue",
@@ -455,17 +568,6 @@ elif menu == "Health Support":
             ],
             "danger": "Blood in stool, dehydration, high fever, or severe weakness."
         },
-        "loose motion": {
-            "guidance": "Loose motions can happen due to unsafe food, infection, or contaminated water.",
-            "reduce": [
-                "Drink ORS.",
-                "Drink clean water.",
-                "Avoid spicy food.",
-                "Eat rice, curd, or simple food.",
-                "Visit doctor if it continues."
-            ],
-            "danger": "Blood in stool, dehydration, high fever, or severe weakness."
-        },
         "weakness": {
             "guidance": "Weakness may happen due to less food, dehydration, fever, or low nutrition.",
             "reduce": [
@@ -488,28 +590,6 @@ elif menu == "Health Support":
             ],
             "danger": "Severe pain, swelling, injury, chest pain, or fever with body pains."
         },
-        "skin rash": {
-            "guidance": "Skin rash may happen due to allergy, infection, heat, or insect bite.",
-            "reduce": [
-                "Keep skin clean.",
-                "Do not scratch.",
-                "Avoid unknown creams.",
-                "Wear clean clothes.",
-                "Visit doctor if rash spreads."
-            ],
-            "danger": "Swelling, breathing problem, fever, or rash spreading fast."
-        },
-        "eye pain": {
-            "guidance": "Eye pain may happen due to dust, infection, dryness, or screen strain.",
-            "reduce": [
-                "Wash eyes with clean water.",
-                "Avoid rubbing eyes.",
-                "Reduce screen time.",
-                "Use clean towel.",
-                "Visit eye doctor if pain continues."
-            ],
-            "danger": "Vision loss, severe pain, injury, redness with swelling, or eye discharge."
-        },
         "tooth pain": {
             "guidance": "Tooth pain may happen due to cavity, gum problem, or infection.",
             "reduce": [
@@ -521,47 +601,6 @@ elif menu == "Health Support":
             ],
             "danger": "Face swelling, fever, severe pain, or difficulty opening mouth."
         },
-        "ear pain": {
-             "guidance": "Ear pain may happen due to infection, cold, or injury.",
-             "reduce": [
-                 "Keep ear clean and dry.",
-                 "Avoid inserting objects into ear.",
-                 "Visit doctor if pain continues."
-            ],
-            "danger": "Severe pain, swelling, pus, or hearing problem."
-        },
-
-        "dehydration": {
-             "guidance": "Dehydration happens when body loses too much water.",
-             "reduce": [
-                "Drink ORS or water regularly.",
-                "Avoid too much sun exposure.",
-                "Eat fruits and healthy food."
-            ],
-            "danger": "Severe weakness, dizziness, or unconsciousness."
-        },
-        "back pain": {
-            "guidance": "Back pain may happen due to posture, heavy lifting, or muscle strain.",
-            "reduce": [
-                "Take rest.",
-                "Avoid lifting heavy items.",
-                "Sit with proper posture.",
-                "Do gentle stretching.",
-                "Visit doctor if pain continues."
-            ],
-            "danger": "Pain after injury, leg weakness, numbness, or severe pain."
-        },
-        "pregnancy": {
-            "guidance": "Pregnant women should take regular checkups and follow doctor advice.",
-            "reduce": [
-                "Visit nearest health center regularly.",
-                "Eat nutritious food.",
-                "Take iron and calcium tablets only as advised by doctor.",
-                "Avoid heavy work.",
-                "Call ambulance during emergency."
-            ],
-            "danger": "Heavy bleeding, severe stomach pain, fits, severe headache, or reduced baby movement."
-        },
         "burn": {
             "guidance": "Burns need careful first aid.",
             "reduce": [
@@ -571,16 +610,6 @@ elif menu == "Health Support":
                 "Visit doctor if burn is large or severe."
             ],
             "danger": "Large burn, face burn, electric burn, severe pain, or breathing difficulty."
-        },
-        "injury": {
-            "guidance": "Injury may need cleaning and medical care.",
-            "reduce": [
-                "Wash small wound with clean water.",
-                "Cover with clean cloth.",
-                "Avoid touching wound with dirty hands.",
-                "Visit doctor for deep cuts or serious injury."
-            ],
-            "danger": "Heavy bleeding, deep wound, fracture, head injury, or unconsciousness."
         }
     }
 
@@ -608,14 +637,16 @@ elif menu == "Health Support":
 
         if not found:
             st.warning("This issue is not in the current list.")
-            st.write("""
-            Basic guidance:
-            - Take rest.
-            - Drink clean water.
-            - Eat light and healthy food.
-            - Maintain hygiene.
-            - Visit nearest PHC, clinic, or hospital if symptoms continue.
-            """)
+            st.write(
+                """
+                Basic guidance:
+                - Take rest.
+                - Drink clean water.
+                - Eat light and healthy food.
+                - Maintain hygiene.
+                - Visit nearest PHC, clinic, or hospital if symptoms continue.
+                """
+            )
             st.error("For emergency, call ambulance 108.")
             st.info("Health Website: https://www.mohfw.gov.in")
 
@@ -628,7 +659,15 @@ elif menu == "Complaint Reporting":
     village = st.text_input("Village Name")
     complaint_type = st.selectbox(
         "Complaint Type",
-        ["Garbage Issue", "Road Damage", "Water Problem", "Streetlight Issue", "Drainage Problem", "Electricity Problem", "Other"]
+        [
+            "Garbage Issue",
+            "Road Damage",
+            "Water Problem",
+            "Streetlight Issue",
+            "Drainage Problem",
+            "Electricity Problem",
+            "Other"
+        ]
     )
     details = st.text_area("Complaint Details")
     image = st.file_uploader("Upload Complaint Image", type=["jpg", "jpeg", "png"])
@@ -662,8 +701,13 @@ elif menu == "Complaint Reporting":
             st.error("Please fill all required details.")
 
     st.subheader("Submitted Complaints")
+
     try:
-        st.dataframe(pd.read_csv("complaints.csv"))
+        complaints = pd.read_csv("complaints.csv")
+        st.dataframe(complaints)
+
+        status_counts = complaints["Status"].value_counts()
+        st.bar_chart(status_counts)
     except FileNotFoundError:
         st.write("No complaints submitted yet.")
 
@@ -672,19 +716,27 @@ elif menu == "Complaint Reporting":
 elif menu == "Education & Scholarships":
     st.header("🎓 Education & Scholarships")
 
-    st.write("""
-    This section helps students find scholarship and education support.
-    """)
+    st.markdown(
+        """
+        <div class="small-card">
+        <h4>Scholarship Guidance</h4>
+        <p>This section helps students find scholarship and education support.</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-    st.write("""
-    Steps:
-    1. Check scholarship eligibility.
-    2. Collect Aadhaar, income certificate, caste certificate if needed, marks memo, and bank details.
-    3. Register online.
-    4. Fill scholarship application.
-    5. Upload documents.
-    6. Submit and track status.
-    """)
+    st.write(
+        """
+        Steps:
+        1. Check scholarship eligibility.
+        2. Collect Aadhaar, income certificate, caste certificate if needed, marks memo, and bank details.
+        3. Register online.
+        4. Fill scholarship application.
+        5. Upload documents.
+        6. Submit and track status.
+        """
+    )
 
     st.info("National Scholarship Portal: https://scholarships.gov.in")
     st.info("Telangana MeeSeva: https://ts.meeseva.telangana.gov.in/meeseva/")
@@ -694,18 +746,26 @@ elif menu == "Education & Scholarships":
 elif menu == "Jobs & Skills":
     st.header("💼 Jobs & Skills")
 
-    st.write("""
-    This section helps youth find job and skill development information.
-    """)
+    st.markdown(
+        """
+        <div class="small-card">
+        <h4>Job and Skill Support</h4>
+        <p>This section helps youth find job and skill development information.</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-    st.write("""
-    Steps:
-    1. Register on job portal.
-    2. Create profile.
-    3. Add education and skills.
-    4. Search jobs or training.
-    5. Apply for suitable opportunities.
-    """)
+    st.write(
+        """
+        Steps:
+        1. Register on job portal.
+        2. Create profile.
+        3. Add education and skills.
+        4. Search jobs or training.
+        5. Apply for suitable opportunities.
+        """
+    )
 
     st.info("National Career Service: https://www.ncs.gov.in")
     st.info("Skill India: https://www.skillindiadigital.gov.in")
@@ -722,12 +782,18 @@ elif menu == "Emergency Contacts":
         "Women Helpline": "1091",
         "Child Helpline": "1098",
         "Disaster Management": "1078"
-        ("Women Safety Helpline: 181")
-        ("Mental Health Helpline: 14416")
     }
 
-    for service, number in contacts.items():
-        st.write(f"**{service}:** {number}")
+    for service_name, number in contacts.items():
+        st.markdown(
+            f"""
+            <div class="small-card">
+            <h4>{service_name}</h4>
+            <p><b>{number}</b></p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 
 # ---------------- AI ASSISTANT ----------------
@@ -777,4 +843,19 @@ elif menu == "AI Help Assistant":
             st.success("Go to Emergency Contacts section.")
 
         else:
-            st.info("Ask about Aadhaar, PAN, ration card, certificates, pension, schemes, farming, health, complaints, education, jobs, or emergency.")
+            st.info(
+                "Ask about Aadhaar, PAN, ration card, certificates, pension, schemes, "
+                "farming, health, complaints, education, jobs, or emergency."
+            )
+
+
+# ---------------- FOOTER ----------------
+st.markdown(
+    """
+    <hr>
+    <div class="footer">
+        <p>AI Village Help Portal | Built using Python & Streamlit | Public Service Project</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
