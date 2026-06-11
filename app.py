@@ -35,7 +35,10 @@ language = st.sidebar.selectbox("Select Language", list(language_codes.keys()))
 st.sidebar.title(translate_text("Services", language))
 user_input = st.sidebar.text_input(
     translate_text("Type your problem or service", language),
-    placeholder="Aadhaar, fever, crop insurance"
+    placeholder=translate_text(
+        "Aadhaar, fever, crop insurance",
+        language
+    )
 )
 
 st.title("🏡 " + translate_text("AI Village Help Portal", language))
@@ -180,14 +183,20 @@ if user_input == "":
     st.header(translate_text("Welcome to AI Village Help Portal", language))
     st.write(translate_text("Type your issue or service name in the sidebar search box.", language))
 
-    st.write(translate_text("Examples:", language))
-    st.write("- Aadhaar")
-    st.write("- Fever")
-    st.write("- Farmer")
-    st.write("- Crop Insurance")
-    st.write("- Scholarship")
-    st.write("- Complaint")
-    st.write("- Passport")
+    examples = [
+    "Aadhaar",
+    "Fever",
+    "Farmer",
+    "Crop Insurance",
+    "Scholarship",
+    "Complaint",
+    "Passport"
+]
+
+st.write(translate_text("Examples:", language))
+
+for example in examples:
+    st.write("- " + translate_text(example, language))
 
     col1, col2, col3 = st.columns(3)
     col1.metric(translate_text("Services", language), "45+")
@@ -197,6 +206,35 @@ if user_input == "":
 else:
     query = user_input.lower().strip()
     found = False
+
+    col1, col2, col3 = st.columns([1, 4, 1])
+
+    with col2:
+        for key, value in services.items():
+            if query == key:
+                found = True
+
+                st.success(translate_text("Service Found Successfully", language))
+                st.header(translate_text(value["title"], language))
+                st.info(translate_text(value["details"], language))
+
+                st.subheader(translate_text("✅ Steps", language))
+                for step in value["steps"]:
+                    st.write("• " + translate_text(step, language))
+
+                st.subheader(translate_text("🌐 Website", language))
+                st.markdown(value["website"])
+
+                break
+
+        if not found:
+            st.error(translate_text("Service not found.", language))
+            st.write(
+                translate_text(
+                    "Please type exact service name like aadhaar, pan, fever, farmer, complaint, passport, or job.",
+                    language
+                )
+            )
 
     col1, col2, col3 = st.columns([1, 4, 1])
 
