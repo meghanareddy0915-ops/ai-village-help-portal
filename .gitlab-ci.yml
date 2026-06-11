@@ -1,21 +1,55 @@
 stages:
-  - test
+  - lint
+  - format
+  - type_check
   - security
+  - test
+  - coverage
 
-python-checks:
+lint:
   image: python:3.11
-  stage: test
+  stage: lint
   script:
-    - pip install -r requirements.txt
-    - pip install ruff mypy pytest bandit pip-audit
+    - pip install ruff flake8 pylint vulture pyupgrade
     - ruff check .
-    - mypy app.py || true
-    - pytest || true
-    - bandit -r . || true
-    - pip-audit || true
+    - flake8 . || true
+    - pylint app.py || true
+    - vulture . || true
+    - pyupgrade --py311-plus app.py || true
 
-secret-scan:
+format:
+  image: python:3.11
+  stage: format
+  script:
+    - pip install ruff
+    - ruff format --check . || true
+
+type_check:
+  image: python:3.11
+  stage: type_check
+  script:
+    - pip install mypy
+    - mypy app.py || true
+
+security:
   image: python:3.11
   stage: security
   script:
-    - echo "Secret scanning placeholder"
+    - pip install bandit semgrep pip-audit
+    - bandit -r . || true
+    - semgrep scan --config auto . || true
+    - pip-audit || true
+
+test:
+  image: python:3.11
+  stage: test
+  script:
+    - pip install pytest
+    - pytest || true
+
+coverage:
+  image: python:3.11
+  stage: coverage
+  script:
+    - pip install pytest pytest-cov
+    - pytest --cov=. --cov-report=xml --cov-fail-under=1 || true

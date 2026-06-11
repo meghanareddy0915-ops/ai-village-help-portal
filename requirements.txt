@@ -1,7 +1,14 @@
 streamlit
 pandas
 pytest
+pytest-cov
 ruff
 mypy
 bandit
 pip-audit
+flake8
+pylint
+vulture
+semgraph
+pyupgrade
+deep-translator
