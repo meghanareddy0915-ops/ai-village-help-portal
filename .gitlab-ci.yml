@@ -10,11 +10,12 @@ lint:
   image: python:3.11
   stage: lint
   script:
-    - pip install ruff flake8 pylint vulture
+    - pip install ruff flake8 pylint vulture pyupgrade
     - ruff check .
     - flake8 . || true
     - pylint app.py || true
     - vulture . || true
+    - pyupgrade --py311-plus app.py || true
 
 format:
   image: python:3.11
