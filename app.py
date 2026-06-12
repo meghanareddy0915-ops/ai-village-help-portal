@@ -46,6 +46,15 @@ ai_mode = st.sidebar.selectbox(
     ]
 )
 
+# IMPORTANT
+api_key = ""
+
+if ai_mode == "Online AI - BYOK":
+    api_key = st.sidebar.text_input(
+        "Enter API Key",
+        type="password"
+    )
+
 st.sidebar.title(translate_text("Services", language))
 user_input = st.sidebar.text_input(
     translate_text("Type your problem or service", language),
@@ -79,7 +88,9 @@ def ask_byok_ai(question, key):
         return "Please enter API key."
 
     try:
-        client = OpenAI(api_key=key)
+        client = OpenAI(
+            api_key=api_key,
+            base_url="https://api.groq.com/openai/v1"
 
         response = client.chat.completions.create(
             model="gpt-4o-mini",
@@ -1247,7 +1258,7 @@ else:
 
     if ai_mode == "Online AI - BYOK":
         st.subheader("🤖 BYOK AI Response")
-        answer = ask_byok_ai(user_input, api_key)
+        answer = ask_byok_ai(user_input,api_key)
         st.write(translate_text(answer, language))
         st.stop()
 
