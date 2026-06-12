@@ -12,3 +12,5 @@ vulture
 semgraph
 pyupgrade
 deep-translator
+requests
+openai

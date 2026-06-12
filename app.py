@@ -1,6 +1,9 @@
 import streamlit as st
 from deep_translator import GoogleTranslator
 
+import requests
+from openai import OpenAI
+
 st.set_page_config(page_title="AI Village Help Portal", page_icon="🏡", layout="wide")
 
 language_codes = {
@@ -32,6 +35,17 @@ def translate_text(text, lang):
 st.sidebar.title("🌐 Language")
 language = st.sidebar.selectbox("Select Language", list(language_codes.keys()))
 
+st.sidebar.title("🤖 AI Settings")
+
+ai_mode = st.sidebar.selectbox(
+    "Choose AI Mode",
+    [
+        "Normal Service Search",
+        "Local AI - Ollama",
+        "Online AI - BYOK"
+    ]
+)
+
 st.sidebar.title(translate_text("Services", language))
 user_input = st.sidebar.text_input(
     translate_text("Type your problem or service", language),
@@ -40,6 +54,51 @@ user_input = st.sidebar.text_input(
 
 st.title("🏡 " + translate_text("AI Village Help Portal", language))
 st.write(translate_text("A smart public service portal for village people.", language))
+
+def ask_ollama(question):
+    try:
+        response = requests.post(
+            "http://localhost:11434/api/generate",
+            json={
+                "model": "llama3.2",
+                "prompt": question,
+                "stream": False
+            },
+            timeout=60
+        )
+
+        return response.json()["response"]
+
+    except Exception as error:
+        return f"Ollama Error: {error}"
+
+
+def ask_byok_ai(question, key):
+
+    if not key:
+        return "Please enter API key."
+
+    try:
+        client = OpenAI(api_key=key)
+
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a helpful AI village assistant."
+                },
+                {
+                    "role": "user",
+                    "content": question
+                }
+            ]
+        )
+
+        return response.choices[0].message.content
+
+    except Exception as error:
+        return f"AI Error: {error}"
 
 
 services = [
@@ -1179,6 +1238,18 @@ if user_input.strip() == "":
 else:
     query = user_input.lower().strip()
     found = False
+
+    if ai_mode == "Local AI - Ollama":
+        st.subheader("🤖 Local AI Response")
+        answer = ask_ollama(user_input)
+        st.write(translate_text(answer, language))
+        st.stop()
+
+    if ai_mode == "Online AI - BYOK":
+        st.subheader("🤖 BYOK AI Response")
+        answer = ask_byok_ai(user_input, api_key)
+        st.write(translate_text(answer, language))
+        st.stop()
 
     col1, col2, col3 = st.columns([1, 4, 1])
 
