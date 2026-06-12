@@ -91,9 +91,10 @@ def ask_byok_ai(question, key):
         client = OpenAI(
             api_key=api_key,
             base_url="https://api.groq.com/openai/v1"
+        )
 
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="llama3-8b-8192",
             messages=[
                 {
                     "role": "system",
