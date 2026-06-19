@@ -112,7 +112,6 @@ def ask_byok_ai(question, key):
     except Exception as error:
         return f"AI Error: {error}"
 
-
 services = [
     {
         "keywords": ["aadhaar", "aadhar", "uidai"],
@@ -1214,6 +1213,106 @@ services = [
         ],
         "website": "https://swachhbharatmission.gov.in",
     },
+    {
+    "keywords": ["headache", "head pain", "migraine"],
+    "title": "Headache Guidance",
+    "details": "Headache may happen due to stress, dehydration, lack of sleep, eye strain, or illness.",
+    "benefits": ["Basic headache care", "Helps identify warning signs", "Encourages timely doctor visit"],
+    "documents": ["Health card if available", "Previous medical reports if available"],
+    "eligibility": ["Anyone with headache can use this guidance"],
+    "steps": [
+        "Drink enough clean water.",
+        "Rest in a quiet and comfortable place.",
+        "Avoid bright light and loud noise.",
+        "Reduce mobile or computer screen time.",
+        "Eat food on time and avoid skipping meals.",
+        "Check if headache is due to fever, stress, or lack of sleep.",
+        "Visit doctor if headache is severe or repeated."
+    ],
+    "tips": ["Sleep properly", "Avoid stress", "Do not take random tablets"],
+    "helpline": "Ambulance: 108",
+    "website": "https://www.mohfw.gov.in",
+},
+{
+    "keywords": ["stomach pain", "vomiting", "diarrhea", "loose motion"],
+    "title": "Stomach Problem Guidance",
+    "details": "Stomach problems may happen due to unsafe food, infection, indigestion, or dehydration.",
+    "benefits": ["Basic stomach care", "Helps prevent dehydration", "Encourages doctor visit when needed"],
+    "documents": ["Health card if available"],
+    "eligibility": ["Anyone with stomach pain or vomiting can use this guidance"],
+    "steps": [
+        "Drink clean water.",
+        "Eat light food like rice, curd, or soft food.",
+        "Avoid oily and spicy food.",
+        "Use ORS if loose motions or dehydration occur.",
+        "Wash hands before eating.",
+        "Avoid outside or unsafe food.",
+        "Visit doctor if pain is severe or vomiting continues."
+    ],
+    "tips": ["Drink boiled water", "Maintain hygiene", "Do not ignore dehydration"],
+    "helpline": "Ambulance: 108",
+    "website": "https://www.mohfw.gov.in",
+},
+{
+    "keywords": ["bp", "blood pressure", "high bp", "low bp"],
+    "title": "Blood Pressure Guidance",
+    "details": "Blood pressure problems need regular monitoring and medical advice.",
+    "benefits": ["Health awareness", "Supports regular monitoring", "Encourages medical care"],
+    "documents": ["BP readings if available", "Health card", "Previous medical reports"],
+    "eligibility": ["People with high BP, low BP, dizziness, or weakness can use this guidance"],
+    "steps": [
+        "Check blood pressure using BP machine if available.",
+        "Take rest in a calm place.",
+        "Avoid too much salt if BP is high.",
+        "Drink water and sit safely if feeling dizzy.",
+        "Do not stop BP medicine without doctor advice.",
+        "Maintain regular sleep and walking routine.",
+        "Visit doctor for repeated high or low BP readings."
+    ],
+    "tips": ["Check BP regularly", "Avoid stress", "Follow doctor medicine schedule"],
+    "helpline": "Ambulance: 108",
+    "website": "https://www.mohfw.gov.in",
+},
+{
+    "keywords": ["diabetes", "sugar", "blood sugar"],
+    "title": "Diabetes Guidance",
+    "details": "Diabetes needs food control, regular sugar checking, exercise, and doctor guidance.",
+    "benefits": ["Diabetes awareness", "Helps manage sugar levels", "Encourages regular checkups"],
+    "documents": ["Sugar test reports", "Health card", "Medicine details"],
+    "eligibility": ["People with diabetes or high sugar symptoms can use this guidance"],
+    "steps": [
+        "Check blood sugar regularly.",
+        "Avoid too much sweets and sugary drinks.",
+        "Eat balanced food with vegetables and fiber.",
+        "Walk or exercise regularly if doctor allows.",
+        "Take medicines only as prescribed.",
+        "Do not skip meals suddenly.",
+        "Visit doctor regularly for checkups."
+    ],
+    "tips": ["Keep sugar reports safely", "Avoid self-medication", "Follow diet advice"],
+    "helpline": "Ambulance: 108",
+    "website": "https://www.mohfw.gov.in",
+},
+{
+    "keywords": ["dengue", "malaria", "mosquito fever"],
+    "title": "Mosquito-Borne Disease Guidance",
+    "details": "Dengue and malaria can spread through mosquitoes and need quick medical attention.",
+    "benefits": ["Prevention awareness", "Helps reduce mosquito breeding", "Encourages testing"],
+    "documents": ["Fever records", "Blood test reports if available"],
+    "eligibility": ["Anyone with fever, body pains, or mosquito-borne disease symptoms can use this guidance"],
+    "steps": [
+        "Avoid mosquito bites by using nets or repellents.",
+        "Remove stagnant water near house.",
+        "Keep water containers covered.",
+        "Visit doctor if fever and body pains occur.",
+        "Do blood test if doctor suggests.",
+        "Drink enough fluids.",
+        "Do not take random painkillers without doctor advice."
+    ],
+    "tips": ["Keep surroundings clean", "Use mosquito nets", "Report stagnant water"],
+    "helpline": "Ambulance: 108",
+    "website": "https://www.mohfw.gov.in",
+},
     ]
 
 if user_input.strip() == "":
@@ -1259,7 +1358,7 @@ else:
 
     if ai_mode == "Online AI - BYOK":
         st.subheader("🤖 BYOK AI Response")
-        answer = ask_byok_ai(user_input,api_key)
+        answer = ask_byok_ai(user_input, api_key)
         st.write(translate_text(answer, language))
         st.stop()
 
