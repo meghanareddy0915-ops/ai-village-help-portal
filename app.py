@@ -3,6 +3,7 @@ from deep_translator import GoogleTranslator
 
 import requests
 from openai import OpenAI
+from village_agent import root_agent
 
 st.set_page_config(page_title="AI Village Help Portal", page_icon="🏡", layout="wide")
 
@@ -63,6 +64,8 @@ user_input = st.sidebar.text_input(
 
 st.title("🏡 " + translate_text("AI Village Help Portal", language))
 st.write(translate_text("A smart public service portal for village people.", language))
+
+st.success("Google ADK Village Agent Loaded Successfully")
 
 def ask_ollama(question):
     try:
