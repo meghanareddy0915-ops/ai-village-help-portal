@@ -117,17 +117,41 @@ def ask_byok_ai(question, key):
         return f"AI Error: {error}"
     
 
-def ask_google_agent(question):
-    response = f"""
-Google ADK Agent Response:
+def ask_google_agent(question, key):
+    if not key:
+        return "Please enter your API key to use Google ADK Agent mode."
 
-User Question:
-{question}
+    try:
+        client = OpenAI(
+            api_key=key,
+            base_url="https://api.groq.com/openai/v1"
+        )
 
-The Village Service Agent is handling this query.
-It will guide the user with simple rural service support.
-"""
-    return response
+        agent_prompt = f"""
+        You are a Google ADK Village Service Agent.
+
+        Help villagers with government services, health guidance,
+        farmer support, complaints, education, emergency help,
+        and public services.
+
+        Give simple step-by-step answer.
+
+        User question: {question}
+        """
+
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": "You are a helpful village service AI agent."},
+                {"role": "user", "content": agent_prompt},
+            ],
+        )
+
+        return response.choices[0].message.content
+
+    except Exception as error:
+        return f"Google ADK Agent Error: {error}"
+    
 services = [
     {
         "keywords": ["aadhaar", "aadhar", "uidai"],
