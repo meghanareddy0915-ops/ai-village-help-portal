@@ -1378,6 +1378,12 @@ else:
         st.write(translate_text(answer, language))
         st.stop()
 
+    if ai_mode == "Google ADK Agent":
+        st.subheader("🤖 Google ADK Agent Response")
+        answer = ask_google_agent(user_input)
+        st.write(translate_text(answer, language))
+        st.stop()
+
     col1, col2, col3 = st.columns([1, 4, 1])
 
     with col2:
