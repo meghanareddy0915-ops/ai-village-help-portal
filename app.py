@@ -43,7 +43,8 @@ ai_mode = st.sidebar.selectbox(
     [
         "Normal Service Search",
         "Local AI - Ollama",
-        "Online AI - BYOK"
+        "Online AI - BYOK",
+        "Google ADK Agent"
     ]
 )
 
@@ -114,7 +115,19 @@ def ask_byok_ai(question, key):
 
     except Exception as error:
         return f"AI Error: {error}"
+    
 
+def ask_google_agent(question):
+    response = f"""
+Google ADK Agent Response:
+
+User Question:
+{question}
+
+The Village Service Agent is handling this query.
+It will guide the user with simple rural service support.
+"""
+    return response
 services = [
     {
         "keywords": ["aadhaar", "aadhar", "uidai"],
