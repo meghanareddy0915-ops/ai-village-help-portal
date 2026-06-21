@@ -51,13 +51,7 @@ ai_mode = st.sidebar.selectbox(
 # IMPORTANT
 api_key = ""
 
-if ai_mode == "Online AI - BYOK":
-    api_key = st.sidebar.text_input(
-        "Enter API Key",
-        type="password"
-    )
-
-if ai_mode == "Google ADK Agent":
+if ai_mode in ["Online AI - BYOK", "Google ADK Agent"]:
     api_key = st.sidebar.text_input(
         "Enter API Key",
         type="password"
