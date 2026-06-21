@@ -1,5 +1,9 @@
 import streamlit as st
 from deep_translator import GoogleTranslator
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 import requests
 from openai import OpenAI
@@ -49,7 +53,7 @@ ai_mode = st.sidebar.selectbox(
 )
 
 # IMPORTANT
-api_key = ""
+api_key = os.getenv("GROQ_API_KEY")
 
 if ai_mode in ["Online AI - BYOK", "Google ADK Agent"]:
     api_key = st.sidebar.text_input(
