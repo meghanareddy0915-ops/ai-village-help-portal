@@ -17,8 +17,6 @@ language_codes = {
     "Hindi": "hi",
     "Tamil": "ta",
     "Kannada": "kn",
-    "Bengali": "bn",
-    "Punjabi": "pa",
     "Urdu": "ur",
 }
 
