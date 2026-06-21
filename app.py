@@ -151,7 +151,7 @@ def ask_google_agent(question, key):
 
     except Exception as error:
         return f"Google ADK Agent Error: {error}"
-    
+
 services = [
     {
         "keywords": ["aadhaar", "aadhar", "uidai"],
@@ -1404,7 +1404,7 @@ else:
 
     if ai_mode == "Google ADK Agent":
         st.subheader("🤖 Google ADK Agent Response")
-        answer = ask_google_agent(user_input)
+        answer = ask_google_agent(user_input, api_key)
         st.write(translate_text(answer, language))
         st.stop()
 
