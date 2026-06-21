@@ -17,12 +17,8 @@ language_codes = {
     "Hindi": "hi",
     "Tamil": "ta",
     "Kannada": "kn",
-    "Malayalam": "ml",
-    "Marathi": "mr",
-    "Gujarati": "gu",
     "Bengali": "bn",
     "Punjabi": "pa",
-    "Odia": "or",
     "Urdu": "ur",
 }
 
