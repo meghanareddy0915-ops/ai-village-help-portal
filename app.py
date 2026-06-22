@@ -1,13 +1,12 @@
 import streamlit as st
 from deep_translator import GoogleTranslator
-from dotenv import load_dotenv
 import os
-
-load_dotenv()
 
 import requests
 from openai import OpenAI
-from village_agent import root_agent
+from dotenv import load_dotenv
+
+load_dotenv()
 
 st.set_page_config(page_title="AI Village Help Portal", page_icon="🏡", layout="wide")
 
@@ -16,7 +15,7 @@ language_codes = {
     "Telugu": "te",
     "Hindi": "hi",
     "Tamil": "ta",
-    "Kannada": "kn",
+    "Kannada": "kn", 
     "Urdu": "ur",
 }
 
