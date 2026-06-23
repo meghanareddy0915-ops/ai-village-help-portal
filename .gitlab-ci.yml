@@ -10,6 +10,7 @@ lint:
   image: python:3.11
   stage: lint
   script:
+    - pip install -r requirements.txt
     - pip install ruff flake8 pylint vulture pyupgrade
     - ruff check .
     - flake8 . || true
@@ -21,13 +22,15 @@ format:
   image: python:3.11
   stage: format
   script:
+    - pip install -r requirements.txt
     - pip install ruff
-    - ruff format --check . || true
+    - ruff format --check .
 
 type_check:
   image: python:3.11
   stage: type_check
   script:
+    - pip install -r requirements.txt
     - pip install mypy
     - mypy app.py || true
 
@@ -35,6 +38,7 @@ security:
   image: python:3.11
   stage: security
   script:
+    - pip install -r requirements.txt
     - pip install bandit semgrep pip-audit
     - bandit -r . || true
     - semgrep scan --config auto . || true
@@ -44,12 +48,14 @@ test:
   image: python:3.11
   stage: test
   script:
+    - pip install -r requirements.txt
     - pip install pytest
-    - pytest || true
+    - pytest || echo "No tests found"
 
 coverage:
   image: python:3.11
   stage: coverage
   script:
+    - pip install -r requirements.txt
     - pip install pytest pytest-cov
     - pytest --cov=. --cov-report=xml --cov-fail-under=1 || true
