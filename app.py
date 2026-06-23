@@ -15,7 +15,7 @@ language_codes = {
     "Telugu": "te",
     "Hindi": "hi",
     "Tamil": "ta",
-    "Kannada": "kn", 
+    "Kannada": "kn",
     "Urdu": "ur",
 }
 
@@ -25,7 +25,9 @@ def translate_text(text, lang):
     if lang == "English":
         return text
     try:
-        return GoogleTranslator(source="auto", target=language_codes[lang]).translate(text)
+        return GoogleTranslator(source="auto", target=language_codes[lang]).translate(
+            text
+        )
     except Exception:
         return text
 
@@ -41,18 +43,15 @@ ai_mode = st.sidebar.selectbox(
         "Normal Service Search",
         "Local AI - Ollama",
         "Online AI - BYOK",
-        "Google ADK Agent"
-    ]
+        "Google ADK Agent",
+    ],
 )
 
 # IMPORTANT
 api_key = os.getenv("GROQ_API_KEY")
 
 if ai_mode in ["Online AI - BYOK", "Google ADK Agent"]:
-    api_key = st.sidebar.text_input(
-        "Enter API Key",
-        type="password"
-    )
+    api_key = st.sidebar.text_input("Enter API Key", type="password")
 
 st.sidebar.title(translate_text("Services", language))
 user_input = st.sidebar.text_input(
@@ -65,16 +64,13 @@ st.write(translate_text("A smart public service portal for village people.", lan
 
 st.success("Google ADK Village Agent Loaded Successfully")
 
+
 def ask_ollama(question):
     try:
         response = requests.post(
             "http://localhost:11434/api/generate",
-            json={
-                "model": "llama3.2",
-                "prompt": question,
-                "stream": False
-            },
-            timeout=60
+            json={"model": "llama3.2", "prompt": question, "stream": False},
+            timeout=60,
         )
 
         return response.json()["response"]
@@ -84,45 +80,35 @@ def ask_ollama(question):
 
 
 def ask_byok_ai(question, key):
-
     if not key:
         return "Please enter API key."
 
     try:
-        client = OpenAI(
-            api_key=api_key,
-            base_url="https://api.groq.com/openai/v1"
-        )
+        client = OpenAI(api_key=api_key, base_url="https://api.groq.com/openai/v1")
 
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[
                 {
                     "role": "system",
-                    "content": "You are a helpful AI village assistant."
+                    "content": "You are a helpful AI village assistant.",
                 },
-                {
-                    "role": "user",
-                    "content": question
-                }
-            ]
+                {"role": "user", "content": question},
+            ],
         )
 
         return response.choices[0].message.content
 
     except Exception as error:
         return f"AI Error: {error}"
-    
+
 
 def ask_google_agent(question, key):
     if not key:
         return "Please enter your API key to use Google ADK Agent mode."
 
     try:
-        client = OpenAI(
-            api_key=key,
-            base_url="https://api.groq.com/openai/v1"
-        )
+        client = OpenAI(api_key=key, base_url="https://api.groq.com/openai/v1")
 
         agent_prompt = f"""
         You are a Google ADK Village Service Agent.
@@ -139,7 +125,10 @@ def ask_google_agent(question, key):
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[
-                {"role": "system", "content": "You are a helpful village service AI agent."},
+                {
+                    "role": "system",
+                    "content": "You are a helpful village service AI agent.",
+                },
                 {"role": "user", "content": agent_prompt},
             ],
         )
@@ -148,6 +137,7 @@ def ask_google_agent(question, key):
 
     except Exception as error:
         return f"Google ADK Agent Error: {error}"
+
 
 services = [
     {
@@ -400,9 +390,13 @@ services = [
         ],
         "website": "https://crsorgi.gov.in",
     },
-
     {
-        "keywords": ["pension", "widow pension", "old age pension", "disability pension"],
+        "keywords": [
+            "pension",
+            "widow pension",
+            "old age pension",
+            "disability pension",
+        ],
         "title": "Pension Services",
         "details": "Pension schemes provide monthly financial support for elderly people, widows, and disabled citizens.",
         "benefits": [
@@ -444,7 +438,6 @@ services = [
         ],
         "website": "https://nsap.nic.in",
     },
-
     {
         "keywords": ["voter", "voter id", "election card"],
         "title": "Voter ID",
@@ -484,7 +477,6 @@ services = [
         ],
         "website": "https://voters.eci.gov.in",
     },
-
     {
         "keywords": ["passport", "passport seva"],
         "title": "Passport Service",
@@ -527,7 +519,6 @@ services = [
         ],
         "website": "https://www.passportindia.gov.in",
     },
-
     {
         "keywords": ["driving licence", "license", "dl"],
         "title": "Driving Licence",
@@ -569,7 +560,6 @@ services = [
         ],
         "website": "https://parivahan.gov.in",
     },
-
     {
         "keywords": ["farmer", "crop", "agriculture"],
         "title": "Farmer Support",
@@ -651,7 +641,6 @@ services = [
         ],
         "website": "https://pmfby.gov.in",
     },
-
     {
         "keywords": ["scholarship", "student", "education"],
         "title": "Education & Scholarships",
@@ -696,7 +685,6 @@ services = [
         ],
         "website": "https://scholarships.gov.in",
     },
-
     {
         "keywords": ["fever", "temperature"],
         "title": "Fever Guidance",
@@ -736,7 +724,6 @@ services = [
         "helpline": "Ambulance: 108",
         "website": "https://www.mohfw.gov.in",
     },
-
     {
         "keywords": ["cough", "cold", "throat pain"],
         "title": "Cough and Cold Guidance",
@@ -772,7 +759,6 @@ services = [
         "helpline": "Ambulance: 108",
         "website": "https://www.mohfw.gov.in",
     },
-
     {
         "keywords": ["job", "employment", "skill", "free course"],
         "title": "Jobs and Skill Development",
@@ -814,7 +800,6 @@ services = [
         ],
         "website": "https://www.ncs.gov.in",
     },
-
     {
         "keywords": ["garbage", "waste", "cleanliness", "sanitation"],
         "title": "Garbage and Sanitation Complaint",
@@ -852,7 +837,6 @@ services = [
         ],
         "website": "https://swachhbharatmission.gov.in",
     },
-
     {
         "keywords": ["water", "water problem", "water supply", "drinking water"],
         "title": "Water Supply Problem",
@@ -928,7 +912,6 @@ services = [
         "helpline": "Women Helpline: 181 | Emergency: 112",
         "website": "https://wcd.nic.in",
     },
-
     {
         "keywords": ["emergency", "police", "ambulance", "fire"],
         "title": "Emergency Contacts",
@@ -967,7 +950,6 @@ services = [
         "helpline": "National Emergency: 112",
         "website": "https://112.gov.in",
     },
-
     {
         "keywords": ["land records", "pahani", "adangal", "land passbook"],
         "title": "Land Records Service",
@@ -1006,7 +988,6 @@ services = [
         ],
         "website": "https://dharani.telangana.gov.in",
     },
-
     {
         "keywords": ["mgnrega", "job card", "employment card"],
         "title": "MGNREGA Job Card",
@@ -1048,7 +1029,6 @@ services = [
         ],
         "website": "https://nrega.nic.in",
     },
-
     {
         "keywords": ["bus pass", "student bus pass"],
         "title": "Bus Pass Service",
@@ -1090,7 +1070,6 @@ services = [
         ],
         "website": "https://online.tsrtcpass.in",
     },
-
     {
         "keywords": ["electricity", "current bill", "power bill"],
         "title": "Electricity Bill Payment",
@@ -1128,7 +1107,6 @@ services = [
         ],
         "website": "https://www.tssouthernpower.com",
     },
-
     {
         "keywords": ["gas", "lpg", "gas connection"],
         "title": "LPG Gas Connection",
@@ -1169,7 +1147,6 @@ services = [
         ],
         "website": "https://www.mylpg.in",
     },
-
     {
         "keywords": ["bank", "bank account", "loan"],
         "title": "Bank Account and Loan Guidance",
@@ -1211,7 +1188,6 @@ services = [
         ],
         "website": "https://www.india.gov.in",
     },
-
     {
         "keywords": ["toilet", "toilet scheme", "swachh bharat"],
         "title": "Toilet Scheme",
@@ -1251,110 +1227,159 @@ services = [
         "website": "https://swachhbharatmission.gov.in",
     },
     {
-    "keywords": ["headache", "head pain", "migraine"],
-    "title": "Headache Guidance",
-    "details": "Headache may happen due to stress, dehydration, lack of sleep, eye strain, or illness.",
-    "benefits": ["Basic headache care", "Helps identify warning signs", "Encourages timely doctor visit"],
-    "documents": ["Health card if available", "Previous medical reports if available"],
-    "eligibility": ["Anyone with headache can use this guidance"],
-    "steps": [
-        "Drink enough clean water.",
-        "Rest in a quiet and comfortable place.",
-        "Avoid bright light and loud noise.",
-        "Reduce mobile or computer screen time.",
-        "Eat food on time and avoid skipping meals.",
-        "Check if headache is due to fever, stress, or lack of sleep.",
-        "Visit doctor if headache is severe or repeated."
-    ],
-    "tips": ["Sleep properly", "Avoid stress", "Do not take random tablets"],
-    "helpline": "Ambulance: 108",
-    "website": "https://www.mohfw.gov.in",
-},
-{
-    "keywords": ["stomach pain", "vomiting", "diarrhea", "loose motion"],
-    "title": "Stomach Problem Guidance",
-    "details": "Stomach problems may happen due to unsafe food, infection, indigestion, or dehydration.",
-    "benefits": ["Basic stomach care", "Helps prevent dehydration", "Encourages doctor visit when needed"],
-    "documents": ["Health card if available"],
-    "eligibility": ["Anyone with stomach pain or vomiting can use this guidance"],
-    "steps": [
-        "Drink clean water.",
-        "Eat light food like rice, curd, or soft food.",
-        "Avoid oily and spicy food.",
-        "Use ORS if loose motions or dehydration occur.",
-        "Wash hands before eating.",
-        "Avoid outside or unsafe food.",
-        "Visit doctor if pain is severe or vomiting continues."
-    ],
-    "tips": ["Drink boiled water", "Maintain hygiene", "Do not ignore dehydration"],
-    "helpline": "Ambulance: 108",
-    "website": "https://www.mohfw.gov.in",
-},
-{
-    "keywords": ["bp", "blood pressure", "high bp", "low bp"],
-    "title": "Blood Pressure Guidance",
-    "details": "Blood pressure problems need regular monitoring and medical advice.",
-    "benefits": ["Health awareness", "Supports regular monitoring", "Encourages medical care"],
-    "documents": ["BP readings if available", "Health card", "Previous medical reports"],
-    "eligibility": ["People with high BP, low BP, dizziness, or weakness can use this guidance"],
-    "steps": [
-        "Check blood pressure using BP machine if available.",
-        "Take rest in a calm place.",
-        "Avoid too much salt if BP is high.",
-        "Drink water and sit safely if feeling dizzy.",
-        "Do not stop BP medicine without doctor advice.",
-        "Maintain regular sleep and walking routine.",
-        "Visit doctor for repeated high or low BP readings."
-    ],
-    "tips": ["Check BP regularly", "Avoid stress", "Follow doctor medicine schedule"],
-    "helpline": "Ambulance: 108",
-    "website": "https://www.mohfw.gov.in",
-},
-{
-    "keywords": ["diabetes", "sugar", "blood sugar"],
-    "title": "Diabetes Guidance",
-    "details": "Diabetes needs food control, regular sugar checking, exercise, and doctor guidance.",
-    "benefits": ["Diabetes awareness", "Helps manage sugar levels", "Encourages regular checkups"],
-    "documents": ["Sugar test reports", "Health card", "Medicine details"],
-    "eligibility": ["People with diabetes or high sugar symptoms can use this guidance"],
-    "steps": [
-        "Check blood sugar regularly.",
-        "Avoid too much sweets and sugary drinks.",
-        "Eat balanced food with vegetables and fiber.",
-        "Walk or exercise regularly if doctor allows.",
-        "Take medicines only as prescribed.",
-        "Do not skip meals suddenly.",
-        "Visit doctor regularly for checkups."
-    ],
-    "tips": ["Keep sugar reports safely", "Avoid self-medication", "Follow diet advice"],
-    "helpline": "Ambulance: 108",
-    "website": "https://www.mohfw.gov.in",
-},
-{
-    "keywords": ["dengue", "malaria", "mosquito fever"],
-    "title": "Mosquito-Borne Disease Guidance",
-    "details": "Dengue and malaria can spread through mosquitoes and need quick medical attention.",
-    "benefits": ["Prevention awareness", "Helps reduce mosquito breeding", "Encourages testing"],
-    "documents": ["Fever records", "Blood test reports if available"],
-    "eligibility": ["Anyone with fever, body pains, or mosquito-borne disease symptoms can use this guidance"],
-    "steps": [
-        "Avoid mosquito bites by using nets or repellents.",
-        "Remove stagnant water near house.",
-        "Keep water containers covered.",
-        "Visit doctor if fever and body pains occur.",
-        "Do blood test if doctor suggests.",
-        "Drink enough fluids.",
-        "Do not take random painkillers without doctor advice."
-    ],
-    "tips": ["Keep surroundings clean", "Use mosquito nets", "Report stagnant water"],
-    "helpline": "Ambulance: 108",
-    "website": "https://www.mohfw.gov.in",
-},
-    ]
+        "keywords": ["headache", "head pain", "migraine"],
+        "title": "Headache Guidance",
+        "details": "Headache may happen due to stress, dehydration, lack of sleep, eye strain, or illness.",
+        "benefits": [
+            "Basic headache care",
+            "Helps identify warning signs",
+            "Encourages timely doctor visit",
+        ],
+        "documents": [
+            "Health card if available",
+            "Previous medical reports if available",
+        ],
+        "eligibility": ["Anyone with headache can use this guidance"],
+        "steps": [
+            "Drink enough clean water.",
+            "Rest in a quiet and comfortable place.",
+            "Avoid bright light and loud noise.",
+            "Reduce mobile or computer screen time.",
+            "Eat food on time and avoid skipping meals.",
+            "Check if headache is due to fever, stress, or lack of sleep.",
+            "Visit doctor if headache is severe or repeated.",
+        ],
+        "tips": ["Sleep properly", "Avoid stress", "Do not take random tablets"],
+        "helpline": "Ambulance: 108",
+        "website": "https://www.mohfw.gov.in",
+    },
+    {
+        "keywords": ["stomach pain", "vomiting", "diarrhea", "loose motion"],
+        "title": "Stomach Problem Guidance",
+        "details": "Stomach problems may happen due to unsafe food, infection, indigestion, or dehydration.",
+        "benefits": [
+            "Basic stomach care",
+            "Helps prevent dehydration",
+            "Encourages doctor visit when needed",
+        ],
+        "documents": ["Health card if available"],
+        "eligibility": ["Anyone with stomach pain or vomiting can use this guidance"],
+        "steps": [
+            "Drink clean water.",
+            "Eat light food like rice, curd, or soft food.",
+            "Avoid oily and spicy food.",
+            "Use ORS if loose motions or dehydration occur.",
+            "Wash hands before eating.",
+            "Avoid outside or unsafe food.",
+            "Visit doctor if pain is severe or vomiting continues.",
+        ],
+        "tips": ["Drink boiled water", "Maintain hygiene", "Do not ignore dehydration"],
+        "helpline": "Ambulance: 108",
+        "website": "https://www.mohfw.gov.in",
+    },
+    {
+        "keywords": ["bp", "blood pressure", "high bp", "low bp"],
+        "title": "Blood Pressure Guidance",
+        "details": "Blood pressure problems need regular monitoring and medical advice.",
+        "benefits": [
+            "Health awareness",
+            "Supports regular monitoring",
+            "Encourages medical care",
+        ],
+        "documents": [
+            "BP readings if available",
+            "Health card",
+            "Previous medical reports",
+        ],
+        "eligibility": [
+            "People with high BP, low BP, dizziness, or weakness can use this guidance"
+        ],
+        "steps": [
+            "Check blood pressure using BP machine if available.",
+            "Take rest in a calm place.",
+            "Avoid too much salt if BP is high.",
+            "Drink water and sit safely if feeling dizzy.",
+            "Do not stop BP medicine without doctor advice.",
+            "Maintain regular sleep and walking routine.",
+            "Visit doctor for repeated high or low BP readings.",
+        ],
+        "tips": [
+            "Check BP regularly",
+            "Avoid stress",
+            "Follow doctor medicine schedule",
+        ],
+        "helpline": "Ambulance: 108",
+        "website": "https://www.mohfw.gov.in",
+    },
+    {
+        "keywords": ["diabetes", "sugar", "blood sugar"],
+        "title": "Diabetes Guidance",
+        "details": "Diabetes needs food control, regular sugar checking, exercise, and doctor guidance.",
+        "benefits": [
+            "Diabetes awareness",
+            "Helps manage sugar levels",
+            "Encourages regular checkups",
+        ],
+        "documents": ["Sugar test reports", "Health card", "Medicine details"],
+        "eligibility": [
+            "People with diabetes or high sugar symptoms can use this guidance"
+        ],
+        "steps": [
+            "Check blood sugar regularly.",
+            "Avoid too much sweets and sugary drinks.",
+            "Eat balanced food with vegetables and fiber.",
+            "Walk or exercise regularly if doctor allows.",
+            "Take medicines only as prescribed.",
+            "Do not skip meals suddenly.",
+            "Visit doctor regularly for checkups.",
+        ],
+        "tips": [
+            "Keep sugar reports safely",
+            "Avoid self-medication",
+            "Follow diet advice",
+        ],
+        "helpline": "Ambulance: 108",
+        "website": "https://www.mohfw.gov.in",
+    },
+    {
+        "keywords": ["dengue", "malaria", "mosquito fever"],
+        "title": "Mosquito-Borne Disease Guidance",
+        "details": "Dengue and malaria can spread through mosquitoes and need quick medical attention.",
+        "benefits": [
+            "Prevention awareness",
+            "Helps reduce mosquito breeding",
+            "Encourages testing",
+        ],
+        "documents": ["Fever records", "Blood test reports if available"],
+        "eligibility": [
+            "Anyone with fever, body pains, or mosquito-borne disease symptoms can use this guidance"
+        ],
+        "steps": [
+            "Avoid mosquito bites by using nets or repellents.",
+            "Remove stagnant water near house.",
+            "Keep water containers covered.",
+            "Visit doctor if fever and body pains occur.",
+            "Do blood test if doctor suggests.",
+            "Drink enough fluids.",
+            "Do not take random painkillers without doctor advice.",
+        ],
+        "tips": [
+            "Keep surroundings clean",
+            "Use mosquito nets",
+            "Report stagnant water",
+        ],
+        "helpline": "Ambulance: 108",
+        "website": "https://www.mohfw.gov.in",
+    },
+]
 
 if user_input.strip() == "":
     st.header(translate_text("Welcome to AI Village Help Portal", language))
-    st.write(translate_text("Type your issue or service name in the sidebar search box.", language))
+    st.write(
+        translate_text(
+            "Type your issue or service name in the sidebar search box.", language
+        )
+    )
 
     st.write(translate_text("Examples:", language))
     examples = [
@@ -1380,7 +1405,10 @@ if user_input.strip() == "":
 
     col1, col2, col3 = st.columns(3)
     col1.metric(translate_text("Services", language), "80+")
-    col2.metric(translate_text("Government Support", language), translate_text("Available", language))
+    col2.metric(
+        translate_text("Government Support", language),
+        translate_text("Available", language),
+    )
     col3.metric(translate_text("Village Help", language), "24/7")
 
 else:
@@ -1428,7 +1456,9 @@ else:
                 for item in service["eligibility"]:
                     st.write("✔️ " + translate_text(item, language))
 
-                st.subheader(translate_text("🪜 Detailed Step-by-Step Process", language))
+                st.subheader(
+                    translate_text("🪜 Detailed Step-by-Step Process", language)
+                )
                 for index, step in enumerate(service["steps"], start=1):
                     st.write(f"{index}. " + translate_text(step, language))
 
