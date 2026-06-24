@@ -26,9 +26,7 @@ lint:
 format:
   stage: format
   script:
-    - pip install -r requirements.txt
-    - pip install ruff
-    - ruff format --check .
+    - uv run ruff format --check .
 
 type_check:
   stage: type_check
