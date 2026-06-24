@@ -165,3 +165,5 @@ Meghana Reddy
 ## 📜 License
 
 This project is licensed under AGPLv3.
+
+Minor documentation update to trigger CI pipeline
