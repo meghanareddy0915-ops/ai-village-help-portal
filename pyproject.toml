@@ -5,3 +5,18 @@ min_confidence = 80
 
 [tool.flake8]
 max-line-length = 88
+
+[dependency-groups]
+dev = [
+    "bandit>=1.9.4",
+    "flake8>=7.3.0",
+    "mypy>=2.1.0",
+    "pip-audit>=2.10.1",
+    "pylint>=4.0.6",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "pyupgrade>=3.21.2",
+    "ruff>=0.15.19",
+    "semgraph>=0.0.1.dev0",
+    "vulture>=2.16",
+]
