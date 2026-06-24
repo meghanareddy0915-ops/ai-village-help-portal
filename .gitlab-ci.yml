@@ -48,4 +48,4 @@ test:
 coverage:
   stage: coverage
   script:
-    - uv runpytest --cov=. --cov-report=xml --cov-fail-under=1 || true
+    - uv run pytest --cov=. --cov-report=xml --cov-fail-under=1 || true
