@@ -160,4 +160,4 @@ Prepared:
 ---
 
 # Project Purpose
-This project helps village people access important public services easily using a simple AI-based portal.ss
+This project helps village people access important public services easily using a simple AI-based portal.

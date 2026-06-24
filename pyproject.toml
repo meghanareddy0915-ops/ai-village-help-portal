@@ -1,3 +1,16 @@
+[project]
+name = "ai-village-help-portal"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "deep-translator",
+    "google-adk",
+    "openai",
+    "pandas",
+    "requests",
+    "streamlit",
+]
+
 [tool.vulture]
 min_confidence = 80
 
@@ -18,5 +31,6 @@ dev = [
     "pyupgrade>=3.21.2",
     "ruff>=0.15.19",
     "semgraph>=0.0.1.dev0",
+    "semgrep>=1.127.0",
     "vulture>=2.16",
 ]
