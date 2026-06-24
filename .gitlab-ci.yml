@@ -31,9 +31,7 @@ format:
 type_check:
   stage: type_check
   script:
-    - pip install -r requirements.txt
-    - pip install mypy
-    - mypy app.py || true
+    - uv run ruff format --check
 
 security:
   stage: security
