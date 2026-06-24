@@ -17,13 +17,11 @@ stages:
 lint:
   stage: lint
   script:
-    - pip install -r requirements.txt
-    - pip install ruff flake8 pylint vulture pyupgrade
-    - ruff check .
-    - flake8 . || true
-    - pylint app.py || true
-    - vulture . || true
-    - pyupgrade --py311-plus app.py || true
+    - uv run ruff check .
+    - uv run flake8 . || true
+    - uv run pylint app.py || true
+    - uv run vulture . || true
+    - uv run pyupgrade --py311-plus app.py
 
 format:
   stage: format
