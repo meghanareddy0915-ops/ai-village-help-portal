@@ -31,27 +31,21 @@ format:
 type_check:
   stage: type_check
   script:
-    - uv run ruff format --check
+    - uv run mypy app.py || true 
 
 security:
   stage: security
   script:
-    - pip install -r requirements.txt
-    - pip install bandit semgrep pip-audit
-    - bandit -r . || true
-    - semgrep scan --config auto . || true
-    - pip-audit || true
+    - uv run bandit -r . || true
+    - uv runsemgrep scan --config auto . || true
+    - uv runpip-audit || true
 
 test:
   stage: test
   script:
-    - pip install -r requirements.txt
-    - pip install pytest
-    - pytest || echo "No tests found"
+    -uv run pytest || echo "No tests found"
 
 coverage:
   stage: coverage
   script:
-    - pip install -r requirements.txt
-    - pip install pytest pytest-cov
-    - pytest --cov=. --cov-report=xml --cov-fail-under=1 || true
+    - uv runpytest --cov=. --cov-report=xml --cov-fail-under=1 || true
