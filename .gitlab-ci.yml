@@ -1,7 +1,7 @@
 default:
   image: python:3.11
   tags:
-    - village_help_portal
+    - local-runner
 
 stages:
   - lint
