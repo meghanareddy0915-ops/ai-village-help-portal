@@ -2,9 +2,6 @@ default:
   image: python:3.11
   tags:
     - village_help_portal
-before_script:
-  - pip intsall uv
-  - uv sync
 
 stages:
   - lint
@@ -17,35 +14,47 @@ stages:
 lint:
   stage: lint
   script:
-    - uv run ruff check .
-    - uv run flake8 . || true
-    - uv run pylint app.py || true
-    - uv run vulture . || true
-    - uv run pyupgrade --py311-plus app.py
+    - pip install -r requirements.txt
+    - pip install ruff flake8 pylint vulture pyupgrade
+    - ruff check .
+    - flake8 . || true
+    - pylint app.py || true
+    - vulture . || true
+    - pyupgrade --py311-plus app.py || true
 
 format:
   stage: format
   script:
-    - uv run ruff format --check .
+    - pip install -r requirements.txt
+    - pip install ruff
+    - ruff format --check .
 
 type_check:
   stage: type_check
   script:
-    - uv run mypy app.py || true 
+    - pip install -r requirements.txt
+    - pip install mypy
+    - mypy app.py || true
 
 security:
   stage: security
   script:
-    - uv run bandit -r . || true
-    - uv runsemgrep scan --config auto . || true
-    - uv runpip-audit || true
+    - pip install -r requirements.txt
+    - pip install bandit semgrep pip-audit
+    - bandit -r . || true
+    - semgrep scan --config auto . || true
+    - pip-audit || true
 
 test:
   stage: test
   script:
-    -uv run pytest || echo "No tests found"
+    - pip install -r requirements.txt
+    - pip install pytest
+    - pytest || echo "No tests found"
 
 coverage:
   stage: coverage
   script:
-    - uv run pytest --cov=. --cov-report=xml --cov-fail-under=1 || true
+    - pip install -r requirements.txt
+    - pip install pytest pytest-cov
+    - pytest --cov=. --cov-report=xml --cov-fail-under=1 || true
