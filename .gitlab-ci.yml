@@ -22,7 +22,7 @@ lint:
   stage: lint
   script:
     - uv sync --dev
-    - uv run ruff check .
+    - uv run python -m ruff check .
     - uv run flake8 . || true
     - uv run pylint app.py || true
     - uv run vulture . || true
@@ -32,7 +32,7 @@ format:
   stage: format
   script:
     - uv sync --dev
-    - uv run ruff format --check .
+    - uv run python -m ruff format --check .
 
 type_check:
   stage: type_check
