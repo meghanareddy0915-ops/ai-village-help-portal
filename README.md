@@ -166,6 +166,7 @@ Meghana Reddy
 ## 📜 License
 
 This project is licensed under AGPLv3.
+=======
 
 ## Future Improvements
 
