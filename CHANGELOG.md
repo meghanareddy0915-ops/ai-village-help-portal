@@ -14,5 +14,5 @@
 ## Unreleased
 - Improved project documentation.
 
-### Documentation
+## Documentation
 - Updated project documentation for better clarity.
