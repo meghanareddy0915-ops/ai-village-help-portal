@@ -17,68 +17,10 @@ This application provides guidance for:
 
 The platform is designed using Streamlit and Python.
 
-<<<<<<< HEAD
-## Requirements
-
-- Python 3.10 or above
-- Streamlit
-- Pandas
-- Internet Connection
-
-## Advantages
-=======
 ---
->>>>>>> 87ab7f23de5270c57ed1507f0d898f4c045c004c
 
 ## 🚀 Features
 
-<<<<<<< HEAD
-## Target Users
-
-- Farmers
-- Students
-- Job Seekers
-- Village Citizens
-- Government Service Users
-
-## How to Run
-
-```bash
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-## Future Improvements
-
-- Voice-based AI assistant
-- Regional language support
-- SMS notifications
-- Online grievance tracking
-- Weather updates for farmers
-```
-## User Benefits
-
-- Quick access to government services
-- Easy navigation for rural users
-- Centralized information portal
-- AI-powered assistance
-
-## Key Services
-
-- Farmer Assistance
-- Health Guidance
-- Complaint Registration
-- Scholarship Information
-- Job Notifications
-- Emergency Support
-
-## Project Goals
-
-- Improve access to public services
-- Support rural communities
-- Provide reliable information
-- Simplify government interactions
-=======
 ### 🪪 Government Services
 
 * Aadhaar guidance
@@ -165,13 +107,13 @@ cd ai-village-help-portal
 ### Install Requirements
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 ### Run Application
 
 ```bash
-streamlit run app.py
+uv run streamlit run app.py
 ```
 
 ---
@@ -189,7 +131,8 @@ https://ai-village-help-portal.streamlit.app
 ai_village_help_portal/
 │
 ├── app.py
-├── requirements.txt
+├── pyproject.toml
+├── uv.lock
 ├── README.md
 ├── CONTRIBUTING.md
 ├── USER_MANUAL.md
@@ -223,4 +166,3 @@ Meghana Reddy
 ## 📜 License
 
 This project is licensed under AGPLv3.
->>>>>>> 87ab7f23de5270c57ed1507f0d898f4c045c004c

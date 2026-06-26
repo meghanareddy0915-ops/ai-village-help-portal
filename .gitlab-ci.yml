@@ -1,3 +1,15 @@
+default:
+  image: ghcr.io/astral-sh/uv:python3.11-bookworm
+  tags:
+    - local-runner
+  before_script:
+    - |
+      if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
+        powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+        $env:Path = "$env:USERPROFILE\.local\bin;$env:USERPROFILE\.cargo\bin;$env:Path"
+      }
+    - uv --version
+
 stages:
   - lint
   - format
@@ -7,49 +19,43 @@ stages:
   - coverage
 
 lint:
-  image: python:3.11
   stage: lint
   script:
-    - pip install ruff flake8 pylint vulture pyupgrade
-    - ruff check .
-    - flake8 . || true
-    - pylint app.py || true
-    - vulture . || true
-    - pyupgrade --py311-plus app.py || true
+    - uv sync --dev
+    - uv run python -m ruff check .
+    - uv run flake8 . || true
+    - uv run pylint app.py || true
+    - uv run vulture . || true
+    - uv run pyupgrade --py311-plus app.py || true
 
 format:
-  image: python:3.11
   stage: format
   script:
-    - pip install ruff
-    - ruff format --check . || true
+    - uv sync --dev
+    - uv run python -m ruff format --check .
 
 type_check:
-  image: python:3.11
   stage: type_check
   script:
-    - pip install mypy
-    - mypy app.py || true
+    - uv sync --dev
+    - uv run mypy app.py || true
 
 security:
-  image: python:3.11
   stage: security
   script:
-    - pip install bandit semgrep pip-audit
-    - bandit -r . || true
-    - semgrep scan --config auto . || true
-    - pip-audit || true
+    - uv sync --dev
+    - uv run bandit -r . || true
+    - uv run semgrep scan --config auto . || true
+    - uv run pip-audit || true
 
 test:
-  image: python:3.11
   stage: test
   script:
-    - pip install pytest
-    - pytest || true
+    - uv sync --dev
+    - uv run pytest || echo "No tests found"
 
 coverage:
-  image: python:3.11
   stage: coverage
   script:
-    - pip install pytest pytest-cov
-    - pytest --cov=. --cov-report=xml --cov-fail-under=1 || true
+    - uv sync --dev
+    - uv run pytest --cov=. --cov-report=xml --cov-fail-under=1 || true
