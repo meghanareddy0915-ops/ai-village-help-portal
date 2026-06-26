@@ -173,3 +173,8 @@ This project is licensed under AGPLv3.
 - Add voice-based interaction.
 - Support more Indian languages.
 - Improve response accuracy.
+
+## Keyboard Shortcuts
+
+- Enter: Submit a query
+- Refresh: Reload the application
