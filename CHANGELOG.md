@@ -13,3 +13,6 @@
 
 ## Unreleased
 - Improved project documentation.
+
+### Documentation
+- Updated project documentation for better clarity.
