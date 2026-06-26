@@ -29,3 +29,7 @@ AI Village Help Portal is an AI-powered platform designed to help users access v
 * Verify internet connectivity.
 * Ensure environment variables are configured.
 * Check application logs for errors.
+
+### Tips
+- Use a stable internet connection.
+- Select your preferred language before asking questions.
