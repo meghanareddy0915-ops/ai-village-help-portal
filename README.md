@@ -166,3 +166,9 @@ Meghana Reddy
 ## 📜 License
 
 This project is licensed under AGPLv3.
+
+## Future Improvements
+
+- Add voice-based interaction.
+- Support more Indian languages.
+- Improve response accuracy.
