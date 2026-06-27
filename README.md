@@ -186,3 +186,7 @@ This project is licensed under AGPLv3.
 ## Support
 
 If you face any issues while using the application, please create an issue in the repository or contact the development team.
+
+## Contact
+
+For issues or suggestions, create an issue in this repository.
