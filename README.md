@@ -19,6 +19,10 @@ The platform is designed using Streamlit and Python.
 
 ---
 
+## Version
+
+Current Version: v1.0.0
+
 ## 🚀 Features
 
 ### 🪪 Government Services
