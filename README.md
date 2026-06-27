@@ -178,3 +178,7 @@ This project is licensed under AGPLv3.
 
 - Enter: Submit a query
 - Refresh: Reload the application
+
+## Support
+
+If you face any issues while using the application, please create an issue in the repository or contact the development team.
